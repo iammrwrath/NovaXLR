@@ -1,0 +1,111 @@
+name: Create Release Build
+on: [ workflow_dispatch, workflow_call ]
+jobs:
+  get_version:
+    name: "Version"
+    uses: ./.github/workflows/get-version.yml
+
+  build_windows:
+    name: "Create Windows Build"
+    runs-on: windows-latest
+    needs: [ get_version ]
+    steps:
+      # Checkout the Utility UI..
+      - name: "Check out GoXLR Utility UI"
+        uses: actions/checkout@v3
+
+      - name: "Install Rust"
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: "Loading Cache"
+        uses: actions/cache@v3
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            goxlr-utility-ui/target
+          key: ${{ runner.os }}-cargo-release-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-release-
+
+      - name: "Build UI"
+        run: "cargo build --manifest-path src-tauri/Cargo.toml --release --all-features"
+
+      - name: "Rename Artifact"
+        run: Rename-Item -Path "src-tauri/target/release/goxlr-utility-ui.exe" -NewName "goxlr-utility-ui-${{ needs.get_version.outputs.version }}.exe"
+
+      - name: "Upload Binary"
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifact
+          path: ./src-tauri/target/release/*.exe
+
+  build:
+    name: "Create Linux Builds"
+    runs-on: ubuntu-22.04
+    needs: [ get_version ]
+    steps:
+      - name: "Check out Repository"
+        uses: actions/checkout@v4
+
+      - name: "Install Rust"
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: "Update Base"
+        run: |
+          sudo apt-get update
+
+      - name: "Install Dependencies"
+        run: |
+          sudo apt-get install \
+            pkg-config \
+            libgtk-3-dev \
+            libsoup-3.0-dev \
+            javascriptcoregtk-4.1 \
+            libwebkit2gtk-4.1-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev
+
+      - name: "Loading Cache"
+        uses: actions/cache@v4
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-release-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-release-
+
+      - name: Install cargo-deb, cargo-generate-rpm
+        run: cargo install --force cargo-deb cargo-generate-rpm
+
+      - name: Install tauri-cli
+        run: cargo install --force tauri-cli --version '^2.0.0-beta'
+
+      - name: "Build Packages"
+        run: ./ci/build-packages
+        shell: bash
+
+      - name: "Upload DEB Artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: debian-artifact
+          path: ./src-tauri/target/debian/*.deb
+
+      - name: "Upload RPM Artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: rpm-artifact
+          path: ./src-tauri/target/generate-rpm/*.rpm
+
+      - name: "Upload AppImage Artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: appimage-artifact
+          path: ./src-tauri/target/release/bundle/appimage/*.AppImage

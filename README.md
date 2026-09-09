@@ -1,35 +1,31 @@
-[![Support Server](https://img.shields.io/discord/1124010710138106017.svg?label=Discord&logo=Discord&colorB=7289da&style=flat)](https://discord.gg/BRBjkkbvmZ)
-[![GitHub tag (latest SemVer pre-release)](https://img.shields.io/github/v/tag/goxlr-on-linux/goxlr-utility?label=Latest)](http://github.com/goxlr-on-linux/goxlr-utility/releases/latest)
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/goxlr-on-linux/goxlr-utility/build.yml)
+# NovaXLR
 
-## GoXLR Configuration Utility
+NovaXLR is a modernized, next-generation audio mixer and routing controller suite for TC-Helicon GoXLR and GoXLR Mini devices on Windows.
 
-An unofficial tool to configure and control a TC-Helicon GoXLR or GoXLR Mini on Linux, MacOS and
-Windows. [Click Here](https://discord.gg/BRBjkkbvmZ) to join our discord!
+## Highlights in NovaXLR
+* **Modern Obsidian Studio Aesthetic**: Sleek dark UI with refined glassmorphic cards, vibrant cyan/blue indicators, and modern typography replacing the legacy 2018 TC-Helicon design.
+* **Proportional Window Scaling**: Dynamically scales uniformly with the application window across 1080p, 1440p, and 4K displays without clipping, cutoffs, or awkward borders.
+* **Native Windows Desktop Experience**: Standalone native window with Start Menu integration, system tray, and auto-start support.
+* **Full Feature Parity**: Complete control over faders, routing matrix, submixes, microphone processing, voice effects, sampler, lighting, and profile management.
 
-## Features
+## Framework Attribution & Acknowledgements
+NovaXLR is developed by [iammrwrath](https://github.com/iammrwrath) and is built on top of the open-source **GoXLR Utility** framework created and maintained by **Craig McLure ([@FrostyCoolSlug](https://github.com/FrostyCoolSlug))** and the **[GoXLR-on-Linux Community](https://github.com/GoXLR-on-Linux)**.
 
-* Full control over the GoXLR and GoXLR Mini (Similar to the official App)
+We express our sincere gratitude to Craig McLure and all open-source contributors for reverse-engineering the GoXLR USB protocol, creating the high-performance Rust daemon, and making open hardware control possible.
+
+* Original upstream project: [https://github.com/GoXLR-on-Linux/goxlr-utility](https://github.com/GoXLR-on-Linux/goxlr-utility)
+* License: MIT License (preserved in full in [LICENSE](LICENSE))
+
+## Original Framework Features
+* Full control over the GoXLR and GoXLR Mini
 * Compatibility with profiles created by the official application
-* An accessible UI designed to work well with Assistive Technologies
-* Remote Access. Control your GoXLR from another computer on your network
-* A Sample 'Pre-Buffer'. Record audio from before you press the button
-* Exit Actions, including saving profiles and loading other profiles / lighting
-* Multiple Device Support. Run more than one GoXLR on one PC
+* Remote Access: Control your GoXLR from another computer on your network
+* A Sample 'Pre-Buffer': Record audio from before you press the button
 * A CLI and API for basic or advanced scripting and automation
-* Streamdeck Integration (
-  through [The StreamDeck Repository](https://github.com/FrostyCoolSlug/goxlr-utility-streamdeck))
 
 ## Downloads
 
-Downloads are available on the [Releases Page](https://github.com/GoXLR-on-Linux/goxlr-utility/releases/latest) under
-the
-'Assets' header, we currently provide the following files:
-
-* `.exe` files, usable on Windows<sup>1</sup>
-* `.pkg` files, usable on MacOS, both Intel and M1 based packages are available<sup>2</sup>
-* `.deb` files, usable on Debian based systems (Ubuntu, Mint, Pop!_OS, etc)
-* `.rpm` files, usable on Redhat based systems (CentOS, Fedora, etc)
+Windows installer releases are available on the [NovaXLR Releases Page](https://github.com/iammrwrath/NovaXLR/releases/latest) under the 'Assets' header.
 
 ### OS / Distro Specific Notes
 

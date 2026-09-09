@@ -9,3 +9,11 @@
 
 # Used by CI to make distributables
 /deployment
+/tools/
+/ci/Output/
+/ci/nsis/*.exe
+
+# Node dependencies and build artifacts
+**/node_modules/
+**/dist/
+**/target/

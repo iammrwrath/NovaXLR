@@ -3,11 +3,11 @@ Unicode True
 
 ; Before we start, lets define some variables..
 !define /ifndef PRODUCT_VERSION "0.0.0"
-!define PRODUCT_NAME "GoXLR Utility"
-!define PRODUCT_PUBLISHER "The GoXLR on Linux Team"
-!define PRODUCT_WEBSITE "https://github.com/goxlr-on-linux/goxlr-utility/"
+!define PRODUCT_NAME "NovaXLR"
+!define PRODUCT_PUBLISHER "iammrwrath"
+!define PRODUCT_WEBSITE "https://github.com/iammrwrath/NovaXLR/"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-!define PRODUCT_REGKEY "Software\GoXLR Utility"
+!define PRODUCT_REGKEY "Software\NovaXLR"
 
 ; Basic Modern User Interface 2 Setup..
 !include "MUI2.nsh"
@@ -68,8 +68,8 @@ FunctionEnd
 
 ; -- UI End
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "../Output/goxlr-utility-${PRODUCT_VERSION}.exe"
-InstallDir "$PROGRAMFILES64\GoXLR Utility"
+OutFile "../Output/NovaXLR-${PRODUCT_VERSION}.exe"
+InstallDir "$PROGRAMFILES64\NovaXLR"
 RequestExecutionLevel admin
 ShowInstDetails show
 ShowUnInstDetails show

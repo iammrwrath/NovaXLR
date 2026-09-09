@@ -1,0 +1,113 @@
+name: Build & Test
+
+on: [ push, pull_request, workflow_call ]
+
+jobs:
+  check_linux:
+    name: Checking for Linux
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Update Base"
+        run: |
+          sudo apt-get update
+
+      - name: "Install Dependencies"
+        run: |
+          sudo apt-get install \
+            pkg-config \
+            libgtk-3-dev \
+            libsoup-3.0-dev \
+            javascriptcoregtk-4.1 \
+            libwebkit2gtk-4.1-dev \
+            libssl-dev \
+            libgtk-3-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy rustfmt
+
+      - name: Preparing Cache..
+        uses: actions/cache@v4
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-debug-
+
+      - name: Running Tests
+        run: cargo check --all-features --manifest-path=src-tauri/Cargo.toml
+
+      - name: Checking Formatting
+        run: cargo fmt --all --manifest-path=src-tauri/Cargo.toml -- --check
+
+      - name: Performing Clippy Test
+        run: cargo clippy --all-targets --all-features --manifest-path=src-tauri/Cargo.toml -- -D warnings
+
+  check_macos:
+    name: Checking for MacOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy rustfmt
+
+      - name: Preparing Cache..
+        uses: actions/cache@v4
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-debug-
+
+      - name: Running Tests
+        run: cargo check --all-features --manifest-path=src-tauri/Cargo.toml
+
+      - name: Checking Formatting
+        run: cargo fmt --all --manifest-path=src-tauri/Cargo.toml -- --check
+
+      - name: Performing Clippy Test
+        run: cargo clippy --all-targets --all-features --manifest-path=src-tauri/Cargo.toml -- -D warnings
+
+  check_windows:
+    name: Checking for Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy rustfmt
+
+      - name: Preparing Cache..
+        uses: actions/cache@v4
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-debug-
+
+      - name: Running Tests
+        run: cargo check --all-features --manifest-path=src-tauri/Cargo.toml
+
+      - name: Checking Formatting
+        run: cargo fmt --all --manifest-path=src-tauri/Cargo.toml -- --check
+
+      - name: Performing Clippy Test
+        run: cargo clippy --all-targets --all-features --manifest-path=src-tauri/Cargo.toml -- -D warnings
