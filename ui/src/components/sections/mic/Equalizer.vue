@@ -103,61 +103,51 @@ export default {
     getBackgroundColour(index) {
       if (isDeviceMini()) {
         if (index < 3) {
-          return "#252927";
+          return "#131722";
         }
 
         if (index < 5) {
-          return "#353937";
+          return "#171d2c";
         }
 
-        return "#3b413f";
+        return "#1c2336";
       }
 
       if (index < 5) {
-        return "#252927";
+        return "#131722";
       }
       if (index < 8) {
-        return "#353937";
+        return "#171d2c";
       }
 
-      return "#3b413f";
+      return "#1c2336";
     },
 
     getInputBackgroundColour(index) {
       if (isDeviceMini()) {
         if (index < 3) {
-          return "#353937";
+          return "#1e2638";
         }
 
         if (index < 5) {
-          return "#3b413f";
+          return "#222b3e";
         }
 
-        return "#535c59";
+        return "#28334a";
       }
 
       if (index < 5) {
-        return "#353937";
+        return "#1e2638";
       }
       if (index < 8) {
-        return "#3b413f";
+        return "#222b3e";
       }
 
-      return "#535c59";
+      return "#28334a";
     },
 
     getRangeBackgroundColour(index) {
-      if (isDeviceMini()) {
-        if (index < 3) {
-          return "#353937";
-        }
-        return "#252927";
-      }
-
-      if (index < 5) {
-        return "#353937";
-      }
-      return "#252927";
+      return "#0f131c";
     },
 
     getMinEqValue(index) {

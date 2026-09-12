@@ -124,65 +124,85 @@ export default {
 
 /* The Actual Border / Setup of the Modal */
 .modal-container {
-  border: 1px solid #000;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 
   min-width: v-bind(width);
   max-width: min-content;
   margin: 0 auto;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
+  background-color: #111520;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Header Styling.. */
 .modal-header {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  font-family: LeagueMono, sans-serif;
-  background-color: #3b413f;
-  text-align: center;
-  color: #fff;
-  overflow: hidden;
+  background-color: #171d2c;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
   outline: none;
 }
 
 .modal-header div {
-  padding: 15px;
-  float: left;
-  display: block;
-  clear: both;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .modal-header button {
-  padding: 14px;
-  float: right;
+  padding: 6px 10px;
   cursor: pointer;
-  background-color: transparent;
-  color: #fff;
-  border: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: #94a3b8;
+  transition: all 0.2s;
+}
+
+.modal-header button:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
 }
 
 .modal-body {
-  background-color: #2d3230;
-  color: #fff;
+  background-color: #111520;
+  color: #f8fafc;
   padding: v-bind(bodyPadding);
 }
 
 .modal-footer {
-  background-color: #2d3230;
+  background-color: #111520;
   text-align: right;
-  padding-right: 10px;
-  padding-bottom: 10px;
+  padding: 12px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .modal-footer button {
-  background-color: #353937;
-  color: #fff;
-  padding: 8px 30px;
-  border: none;
+  background-color: #1e2638;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #f8fafc;
+  padding: 8px 24px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
 .modal-footer button:hover {
-  background-color: #737775;
+  background-color: #2b364e;
+  border-color: #0ea5e9;
+  color: #38bdf8;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.25);
 }
 </style>

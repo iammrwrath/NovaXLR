@@ -38,7 +38,9 @@
         "resizable": true,
         "title": "NovaXLR",
         "width": 1300,
-        "height": 910
+        "height": 910,
+        "minWidth": 800,
+        "minHeight": 560
       }
     ]
   },

@@ -132,6 +132,7 @@ pub enum DaemonCommand {
     ApplySampleChange,
 
     HandleMacOSAggregates(bool),
+    ImportOfficialGoXLR(Option<PathBuf>),
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

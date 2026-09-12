@@ -490,6 +490,37 @@ pub async fn spawn_usb_handler(
                                 change_found = true;
                                 let _ = sender.send(Ok(()));
                             }
+                            DaemonCommand::ImportOfficialGoXLR(custom_path) => {
+                                match crate::official_goxlr::import_official_goxlr(&settings, file_manager.paths(), custom_path).await {
+                                    Ok(summary) => {
+                                        info!(
+                                            "Official GoXLR migration complete: {} profiles, {} mic profiles, {} presets, {} icons, {} samples",
+                                            summary.profiles, summary.mic_profiles, summary.presets, summary.icons, summary.samples
+                                        );
+
+                                        for device in devices.values_mut() {
+                                            if let Some(ref profile_name) = summary.active_profile {
+                                                if let Err(e) = device.perform_command(GoXLRCommand::LoadProfile(profile_name.clone(), true)).await {
+                                                    warn!("Could not load imported active profile {}: {}", profile_name, e);
+                                                }
+                                            }
+                                            if let Some(ref mic_profile_name) = summary.active_mic_profile {
+                                                if let Err(e) = device.perform_command(GoXLRCommand::LoadMicProfile(mic_profile_name.clone(), true)).await {
+                                                    warn!("Could not load imported active mic profile {}: {}", mic_profile_name, e);
+                                                }
+                                            }
+                                        }
+
+                                        files = get_files(&mut file_manager, &settings).await;
+                                        change_found = true;
+                                        let _ = sender.send(Ok(()));
+                                    }
+                                    Err(e) => {
+                                        warn!("Official GoXLR import failed: {}", e);
+                                        let _ = sender.send(Err(e));
+                                    }
+                                }
+                            }
                         }
                     },
 
@@ -686,6 +717,7 @@ async fn get_daemon_status(
             },
             platform: env::consts::OS.to_string(),
             handle_macos_aggregates: settings.get_macos_handle_aggregates().await,
+            official_goxlr_detected: crate::official_goxlr::is_official_goxlr_detected(),
         },
         paths: Paths {
             profile_directory: settings.get_profile_directory().await,

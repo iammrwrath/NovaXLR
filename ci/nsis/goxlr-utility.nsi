@@ -2,7 +2,7 @@ Unicode True
 
 
 ; Before we start, lets define some variables..
-!define /ifndef PRODUCT_VERSION "0.0.0"
+!define /ifndef PRODUCT_VERSION "1.2.4"
 !define PRODUCT_NAME "NovaXLR"
 !define PRODUCT_PUBLISHER "iammrwrath"
 !define PRODUCT_WEBSITE "https://github.com/iammrwrath/NovaXLR/"
@@ -80,7 +80,7 @@ ShowUnInstDetails show
 Function DoInit
 ${If} ${RunningX64}
 ${Else}
-    MessageBox MB_OK|MB_ICONSTOP  "The GoXLR Utility is only available on 64bit Systems"
+    MessageBox MB_OK|MB_ICONSTOP  "${PRODUCT_NAME} is only available on 64bit Systems"
     Abort
 ${EndIf}
 
@@ -233,8 +233,11 @@ Function PerformActionsLeave
 FunctionEnd
 
 Function IsUtilRunning
-; The util spawns a window we can look for..
-FindWindow $0 "GoXLR Utility"
+; Look for either NovaXLR or GoXLR Utility window..
+FindWindow $0 "NovaXLR"
+${If} $0 == 0
+    FindWindow $0 "GoXLR Utility"
+${EndIf}
 StrCmp $0 0 STOP
     ReserveFile "running-warn.ini"
     !insertmacro MUI_HEADER_TEXT "Preparing to Install" "Setup is preparing to install ${PRODUCT_NAME} on your computer."
@@ -251,18 +254,24 @@ FunctionEnd
 Var count
 !macro StopUtility un
 Function ${un}StopUtility
-DetailPrint "Checking for GoXLR Utility.."
+DetailPrint "Checking for running instances.."
 
-FindWindow $0 "GoXLR Utility"
+FindWindow $0 "NovaXLR"
+${If} $0 == 0
+    FindWindow $0 "GoXLR Utility"
+${EndIf}
 StrCmp $0 0 END
-DetailPrint "GoXLR Utility Found, attempting to stop.."
+DetailPrint "${PRODUCT_NAME} found, attempting to stop.."
 
 ; Util is running, send it a WM_CLOSE signal..
 SendMessage $0 ${WM_CLOSE} 0 0
 StrCpy $count 0
 
 LOOP:
-FindWindow $0 "GoXLR Utility"
+FindWindow $0 "NovaXLR"
+${If} $0 == 0
+    FindWindow $0 "GoXLR Utility"
+${EndIf}
 StrCmp $0 0 ENDSLEEP
 Sleep 100
 IntOp $count $count + 1
@@ -270,6 +279,7 @@ StrCmp $count 50 0 LOOP
 
 DetailPrint "Graceful Stop failed, forcing Shutdown"
 ; If we get here, the Util hasn't closed after 5 seconds..
+nsExec::Exec "TaskKill /F /IM goxlr-utility-ui.exe"
 nsExec::Exec "TaskKill /F /IM goxlr-daemon.exe"
 
 ENDSLEEP:
@@ -370,17 +380,20 @@ Section "MainSection" SEC01
 
     SetShellVarContext all
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\GoXLR Utility.lnk" "$INSTDIR\goxlr-launcher.exe"
+    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT_NAME}.lnk" "$INSTDIR\goxlr-launcher.exe"
+    Delete "$SMPROGRAMS\$StartMenuFolder\GoXLR Utility.lnk"
 
     StrCmp $AUTO_START 0 AUTO_START_OFF
         ; Switch to Current User..
         SetShellVarContext current
-        CreateShortCut "$SMPROGRAMS\Startup\GoXLR Utility.lnk" "$INSTDIR\goxlr-daemon.exe"
+        CreateShortCut "$SMPROGRAMS\Startup\${PRODUCT_NAME}.lnk" "$INSTDIR\goxlr-daemon.exe"
+        Delete "$SMPROGRAMS\Startup\GoXLR Utility.lnk"
         Goto POST_AUTO_START
 
     AUTO_START_OFF:
         ; Switch to Current User..
         SetShellVarContext current
+        Delete "$SMPROGRAMS\Startup\${PRODUCT_NAME}.lnk"
         Delete "$SMPROGRAMS\Startup\GoXLR Utility.lnk"
 
     POST_AUTO_START:
@@ -430,6 +443,7 @@ Section Uninstall
   RMDir /r "$SMPROGRAMS\$StartMenuPath"
 
   SetShellVarContext current
+  Delete "$SMPROGRAMS\Startup\${PRODUCT_NAME}.lnk"
   Delete "$SMPROGRAMS\Startup\GoXLR Utility.lnk"
 
   DeleteRegKey HKLM64 "${PRODUCT_UNINST_KEY}"

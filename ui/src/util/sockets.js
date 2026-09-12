@@ -181,7 +181,15 @@ export class Websocket {
             data: request,
         }
 
-        this.#websocket.send(JSON.stringify(final_request));
+        if (!this.#websocket || this.#websocket.readyState !== WebSocket.OPEN) {
+            return Promise.reject(new Error("WebSocket is not connected"));
+        }
+
+        try {
+            this.#websocket.send(JSON.stringify(final_request));
+        } catch (e) {
+            return Promise.reject(e);
+        }
 
         // Create and return a response promise...
         let self = this;
@@ -212,7 +220,11 @@ export function runWebsocket() {
             websocket.on_disconnect(() => {
                 store.socketDisconnected();
                 setTimeout(runWebsocket, 1000);
-            })
+            });
+        }).catch((err) => {
+            console.warn("Error getting initial daemon status:", err);
+            store.socketDisconnected();
+            setTimeout(runWebsocket, 1000);
         });
     }).catch(() => {
         // Wait 1 second, then try again..

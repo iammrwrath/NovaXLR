@@ -41,6 +41,8 @@ pub struct DaemonConfig {
     pub open_ui_on_launch: bool,
     pub platform: String,
     pub handle_macos_aggregates: bool,
+    #[serde(default)]
+    pub official_goxlr_detected: bool,
 }
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]

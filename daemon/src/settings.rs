@@ -340,6 +340,15 @@ impl SettingsHandle {
         settings.activate = activate;
     }
 
+    pub async fn get_device_serials(&self) -> Vec<String> {
+        let settings = self.settings.read().await;
+        if let Some(ref devices) = settings.devices {
+            devices.keys().cloned().collect()
+        } else {
+            Vec::new()
+        }
+    }
+
     pub async fn get_device_profile_name(&self, device_serial: &str) -> Option<String> {
         let settings = self.settings.read().await;
         settings

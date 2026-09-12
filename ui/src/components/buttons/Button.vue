@@ -76,12 +76,16 @@ export default {
 }
 
 .active {
-  background-color: #59b1b6;
-  color: #353937;
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
 }
 
 .disabled {
-  background-color: #383D3B;
-  color: #959796;
+  background-color: #151924;
+  color: #475569;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 </style>

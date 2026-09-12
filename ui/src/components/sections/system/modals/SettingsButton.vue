@@ -80,6 +80,22 @@
           </div>
         </div>
 
+        <div class="officialMigration" role="group" :aria-label="$t('message.system.settings.officialMigration.title')">
+          <div class="migrationHeader">
+            <div class="label">{{ $t('message.system.settings.officialMigration.title') }}</div>
+            <span v-if="isOfficialGoXLRDetected()" class="detectedBadge">
+              <font-awesome-icon icon="fa-solid fa-circle-check" /> {{ $t('message.system.settings.officialMigration.detected') }}
+            </span>
+          </div>
+          <div class="migrationContent">
+            <p class="description">{{ $t('message.system.settings.officialMigration.description') }}</p>
+            <button class="importBtn" :disabled="isImporting" @click="openImportConfirm()">
+              <font-awesome-icon icon="fa-solid fa-file-import" style="margin-right: 6px;" />
+              <span>{{ isImporting ? $t('message.system.settings.officialMigration.importing') : $t('message.system.settings.officialMigration.importButton') }}</span>
+            </button>
+          </div>
+        </div>
+
         <div class="shutdownButton">
           <div style="text-align: right">
             <button ref="shutdownButton" class="shutdown" @click="shutdown_util()">
@@ -95,6 +111,30 @@
       <template v-slot:footer>
         <ModalButton @click="isShutdown = true; $refs.shutdownConfirm.closeModal()">{{ $t('message.modalButtons.yes') }}</ModalButton>
         <ModalButton ref="focusNo" @click="$refs.shutdownConfirm.closeModal()">{{ $t('message.modalButtons.no') }}</ModalButton>
+      </template>
+    </AccessibleModal>
+
+    <AccessibleModal ref="importConfirm" id="confirm_import">
+      <template v-slot:title>{{ $t('message.system.settings.officialMigration.confirmTitle') }}</template>
+      <template v-slot:default>
+        <p style="margin: 0; line-height: 1.6;">{{ $t('message.system.settings.officialMigration.confirmMessage') }}</p>
+      </template>
+      <template v-slot:footer>
+        <ModalButton ref="focusImportConfirm" @click="runOfficialImport()">{{ $t('message.system.settings.officialMigration.confirmButton') }}</ModalButton>
+        <ModalButton @click="$refs.importConfirm.closeModal()">{{ $t('message.modalButtons.cancel') }}</ModalButton>
+      </template>
+    </AccessibleModal>
+
+    <AccessibleModal ref="importResultModal" id="import_result">
+      <template v-slot:title>{{ importResultTitle }}</template>
+      <template v-slot:default>
+        <div :style="{ color: importIsSuccess ? '#38bdf8' : '#f87171', fontSize: '14px', lineHeight: '1.6', display: 'flex', alignItems: 'center' }">
+          <font-awesome-icon :icon="importIsSuccess ? 'fa-solid fa-circle-check' : 'fa-solid fa-xmark'" style="margin-right: 10px; font-size: 18px;" />
+          <div>{{ importResultMessage }}</div>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <ModalButton @click="$refs.importResultModal.closeModal()">{{ $t('message.modalButtons.ok') }}</ModalButton>
       </template>
     </AccessibleModal>
   </div>
@@ -125,6 +165,10 @@ export default {
   data() {
     return {
       isShutdown: false,
+      isImporting: false,
+      importResultTitle: "",
+      importResultMessage: "",
+      importIsSuccess: true,
     }
   },
 
@@ -431,9 +475,43 @@ export default {
         return true;
       }
 
-
       // Based on https://doc.rust-lang.org/std/env/consts/constant.OS.html - It's not my fault if it doesn't work!
       return store.getConfig().platform === "macos";
+    },
+
+    isOfficialGoXLRDetected() {
+      if (store.getConfig() === undefined) {
+        return false;
+      }
+      return !!store.getConfig().official_goxlr_detected;
+    },
+
+    openImportConfirm() {
+      this.$refs.importConfirm.openModal(this.$refs.focusImportConfirm);
+    },
+
+    runOfficialImport() {
+      this.$refs.importConfirm.closeModal();
+      this.isImporting = true;
+      websocket.send_daemon_command({"ImportOfficialGoXLR": null})
+        .then(() => {
+          this.isImporting = false;
+          this.importIsSuccess = true;
+          this.importResultTitle = this.$t('message.system.settings.officialMigration.successTitle');
+          this.importResultMessage = this.$t('message.system.settings.officialMigration.successMessage');
+          this.$nextTick(() => {
+            this.$refs.importResultModal.openModal();
+          });
+        })
+        .catch((err) => {
+          this.isImporting = false;
+          this.importIsSuccess = false;
+          this.importResultTitle = this.$t('message.system.settings.officialMigration.errorTitle');
+          this.importResultMessage = String(err);
+          this.$nextTick(() => {
+            this.$refs.importResultModal.openModal();
+          });
+        });
     }
   },
 };
@@ -441,11 +519,11 @@ export default {
 
 <style scoped>
 .settingList > :nth-child(odd) {
-  background-color: #353937;
+  background-color: #171d2c;
 }
 
 .settingList > :nth-child(even) {
-  background-color: #242826;
+  background-color: #111520;
 }
 
 .recoverDefaults {
@@ -457,7 +535,7 @@ export default {
 .recoverDefaults .label {
   margin: auto;
   width: 100%;
-  color: #ccc;
+  color: #94a3b8;
 }
 
 .recoverDefaults .buttons {
@@ -467,35 +545,107 @@ export default {
 
 .recoverDefaults .buttons div button {
   white-space: nowrap;
-  border: 1px solid #CCCCCC;
-  background-color: transparent;
-  color: #ccc;
-  padding: 3px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .recoverDefaults .buttons div button:hover {
-  border: 1px solid #fff;
-  color: #fff;
+  border-color: #0ea5e9;
+  color: #38bdf8;
+  background-color: rgba(14, 165, 233, 0.1);
+}
+
+.officialMigration {
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.migrationHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.migrationHeader .label {
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.detectedBadge {
+  font-size: 11px;
+  color: #38bdf8;
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.migrationContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.migrationContent .description {
+  margin: 0;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.importBtn {
+  white-space: nowrap;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #0ea5e9;
+  background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.importBtn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+}
+
+.importBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .shutdownButton {
   margin: auto;
-  padding: 5px;
+  padding: 10px;
 }
 
 .shutdownButton .shutdown {
-  color: #cccccc;
-  border: 1px solid #cc0000;
-  background-color: transparent;
-  padding: 4px;
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background-color: rgba(239, 68, 68, 0.06);
+  padding: 5px 12px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
 }
 
 .shutdownButton .shutdown:hover {
   cursor: pointer;
   color: #ffffff;
-  border: 1px solid #ff0000;
+  border-color: #ef4444;
+  background-color: #ef4444;
 }
-
-
 </style>

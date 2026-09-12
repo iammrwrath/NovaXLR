@@ -276,6 +276,10 @@ export default {
       this.fieldValue = this.sliderValue;
       this.calculateTextValue();
     }
+  },
+
+  beforeUnmount() {
+    clearInterval(this.timer);
   }
 }
 </script>

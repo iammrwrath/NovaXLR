@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       active_local: false,
+      animationFrameId: undefined,
 
       canvas: undefined,
       canvas_size: {
@@ -34,6 +35,10 @@ export default {
   methods: {
     stop: function() {
       this.active_local = false;
+      if (this.animationFrameId !== undefined) {
+        cancelAnimationFrame(this.animationFrameId);
+        this.animationFrameId = undefined;
+      }
     },
 
     pollData: function () {
@@ -66,10 +71,13 @@ export default {
     },
 
     draw: function (timestamp) {
-      // Work out if we should draw...
-      if (!this.active_local || this.points.length === 0) {
-        requestAnimationFrame(this.draw)
-        return
+      if (!this.active_local) {
+        this.animationFrameId = undefined;
+        return;
+      }
+      if (this.points.length === 0) {
+        this.animationFrameId = requestAnimationFrame(this.draw);
+        return;
       }
 
       // Create a delta since last frame..
@@ -136,8 +144,12 @@ export default {
       // Update the last paint time..
       this.last_paint = timestamp
 
-      // Call back on the next animation frame
-      requestAnimationFrame(this.draw)
+      // Call back on the next animation frame if still active
+      if (this.active_local) {
+        this.animationFrameId = requestAnimationFrame(this.draw);
+      } else {
+        this.animationFrameId = undefined;
+      }
     },
 
     draw_peaking: function () {
@@ -246,11 +258,10 @@ export default {
     this.canvas.fillStyle = '#00ff00'
     this.canvas.lineWidth = 2
 
-    this.draw()
-
     if (this.active) {
       this.active_local = true;
       this.pollData();
+      this.draw();
     }
   },
 
@@ -260,9 +271,14 @@ export default {
 
   watch: {
     active(newValue) {
-      this.active_local = newValue;
       if (newValue === true) {
+        this.active_local = true;
         this.pollData();
+        if (!this.animationFrameId) {
+          this.draw();
+        }
+      } else {
+        this.stop();
       }
     }
   }

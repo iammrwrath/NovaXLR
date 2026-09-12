@@ -78,21 +78,26 @@ label {
 }
 
 label.selected {
-  background-color: #59b1b6;
-  color: #353937;
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.35);
 }
 
 label:not(.selected):focus-within {
-  background-color: #49514e;
+  background-color: #1e2638;
+  color: #38bdf8;
 }
 
 label:not(.selected):hover {
-  background-color: #49514e;
+  background-color: #1a2233;
+  color: #f8fafc;
 }
 
 label.disabled {
-  background-color: #383D3B;
-  color: #959796;
+  background-color: #151924;
+  color: #475569;
+  opacity: 0.6;
 }
 
 </style>

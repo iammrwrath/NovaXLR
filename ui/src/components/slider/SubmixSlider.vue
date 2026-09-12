@@ -303,6 +303,10 @@ export default {
       this.fieldBValue = this.sliderBValue;
       this.calculateTextValue("B");
     }
+  },
+
+  beforeUnmount() {
+    clearInterval(this.timer);
   }
 
 }

@@ -32,7 +32,7 @@ export const store = reactive({
     },
 
     onDisconnected(func) {
-        this.on_disconnected(func);
+        this.on_disconnected.push(func);
     },
 
     socketDisconnected() {
@@ -151,24 +151,27 @@ export const store = reactive({
 
     resumePatchPath(path) {
         let paths = path.split(";");
-        for (path of paths) {
-            let index = this.pausedPaths.indexOf(path);
+        for (let p of paths) {
+            let index = this.pausedPaths.indexOf(p);
             if (index !== -1) {
-                // We don't care about key organisation, just that the entry is gone!
-                delete this.pausedPaths[index];
+                this.pausedPaths.splice(index, 1);
             }
         }
     },
 
     // eslint-disable-next-line no-unused-vars
     patchData(json) {
-        if (this.have_device) {
+        if (this.have_device && json && json.Patch) {
             for (let patch of json.Patch) {
                 if (this.pausedPaths.includes(patch.path)) {
                     continue;
                 }
 
-                applyOperation(this.status, patch, true, true, false);
+                try {
+                    applyOperation(this.status, patch, true, true, false);
+                } catch (e) {
+                    console.warn("Error applying json patch:", e, patch);
+                }
             }
             this.validateActive();
         }

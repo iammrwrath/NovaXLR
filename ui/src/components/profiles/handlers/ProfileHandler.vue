@@ -1,10 +1,19 @@
 <template>
   <div style="height: 30px; text-align: right">
-    <div style="height: 14px; display: inline-block; width: calc(100% - 50px)">
+    <div style="height: 14px; display: inline-block; width: calc(100% - 75px)">
       <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.08);" />
     </div>
     <button
+      :title="$t('message.profileManager.accessibilityImportOfficialProfiles')"
+      class="openButton"
+      style="margin-right: 4px;"
+      @click="openImportConfirm"
+    >
+      <font-awesome-icon icon="fa-solid fa-file-import" />
+    </button>
+    <button
       :aria-label="$t('message.profileManager.accessibilityOpenProfileDirectory')"
+      :title="$t('message.profileManager.accessibilityOpenProfileDirectory')"
       class="openButton"
       @click="openProfiles"
     >
@@ -38,6 +47,30 @@
     <template v-slot:title>{{$t('message.profileManager.deleteCurrentErrorTitle')}}</template>
     <template v-slot:default>{{$t('message.profileManager.deleteCurrentErrorMessage')}}</template>
   </AccessibleModal>
+
+  <AccessibleModal ref="importConfirm" id="confirm_import_profiles">
+    <template v-slot:title>{{ $t('message.system.settings.officialMigration.confirmTitle') }}</template>
+    <template v-slot:default>
+      <p style="margin: 0; line-height: 1.6;">{{ $t('message.system.settings.officialMigration.confirmMessage') }}</p>
+    </template>
+    <template v-slot:footer>
+      <ModalButton ref="focusImportConfirm" @click="runOfficialImport()">{{ $t('message.system.settings.officialMigration.confirmButton') }}</ModalButton>
+      <ModalButton @click="$refs.importConfirm.closeModal()">{{ $t('message.modalButtons.cancel') }}</ModalButton>
+    </template>
+  </AccessibleModal>
+
+  <AccessibleModal ref="importResultModal" id="import_profiles_result">
+    <template v-slot:title>{{ importResultTitle }}</template>
+    <template v-slot:default>
+      <div :style="{ color: importIsSuccess ? '#38bdf8' : '#f87171', fontSize: '14px', lineHeight: '1.6', display: 'flex', alignItems: 'center' }">
+        <font-awesome-icon :icon="importIsSuccess ? 'fa-solid fa-circle-check' : 'fa-solid fa-xmark'" style="margin-right: 10px; font-size: 18px;" />
+        <div>{{ importResultMessage }}</div>
+      </div>
+    </template>
+    <template v-slot:footer>
+      <ModalButton @click="$refs.importResultModal.closeModal()">{{ $t('message.modalButtons.ok') }}</ModalButton>
+    </template>
+  </AccessibleModal>
 </template>
 
 <script>
@@ -54,6 +87,10 @@ export default {
   data() {
     return {
       selectedProfile: "",
+      isImporting: false,
+      importResultTitle: "",
+      importResultMessage: "",
+      importIsSuccess: true,
     };
   },
 
@@ -163,6 +200,34 @@ export default {
 
     openProfiles() {
       websocket.open_path("Profiles");
+    },
+
+    openImportConfirm() {
+      this.$refs.importConfirm.openModal(this.$refs.focusImportConfirm);
+    },
+
+    runOfficialImport() {
+      this.$refs.importConfirm.closeModal();
+      this.isImporting = true;
+      websocket.send_daemon_command({"ImportOfficialGoXLR": null})
+        .then(() => {
+          this.isImporting = false;
+          this.importIsSuccess = true;
+          this.importResultTitle = this.$t('message.system.settings.officialMigration.successTitle');
+          this.importResultMessage = this.$t('message.system.settings.officialMigration.successMessage');
+          this.$nextTick(() => {
+            this.$refs.importResultModal.openModal();
+          });
+        })
+        .catch((err) => {
+          this.isImporting = false;
+          this.importIsSuccess = false;
+          this.importResultTitle = this.$t('message.system.settings.officialMigration.errorTitle');
+          this.importResultMessage = String(err);
+          this.$nextTick(() => {
+            this.$refs.importResultModal.openModal();
+          });
+        });
     },
   },
 };

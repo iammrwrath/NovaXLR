@@ -30,23 +30,25 @@ export default {
   methods: {
     getLatest() {
       fetch(this.getPath())
-          .then(response => {
-            if (response.status !== 200) {
-              return undefined;
-            }
-            return response.json()
-          })
-          .then(data => {
-            if (data === undefined) {
-              return;
-            }
-            fetch(data[0].url)
-                .then(response => response.json())
-                .then(data => {
-                  this.version = data.tag_name.substring(1);
-                  this.release_path = data.html_url;
-                })
-          });
+        .then(response => {
+          if (!response.ok) {
+            return undefined;
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (!Array.isArray(data) || data.length === 0) {
+            return;
+          }
+          const latestRelease = data[0];
+          if (latestRelease && latestRelease.tag_name) {
+            this.version = latestRelease.tag_name.replace(/^v/, '');
+            this.release_path = latestRelease.html_url || "#";
+          }
+        })
+        .catch(err => {
+          console.debug("Unable to check for NovaXLR updates:", err);
+        });
     },
 
     hasVersion() {
@@ -201,23 +203,32 @@ export default {
 </script>
 
 <style scoped>
- .version {
-   font-family: sans-serif;
-   text-align: center;
-   color: #444444;
-   margin-bottom: 8px;
-   padding: 3px;
- }
+  .version {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 8px;
+    padding: 3px;
+  }
 
- .version a {
-   color: #555555;
- }
+  .version a {
+    color: #38bdf8;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
 
- .version span.click {
-   color: #555555;
-   cursor: pointer;
-   text-decoration: underline;
- }
+  .version a:hover {
+    color: #0ea5e9;
+    text-decoration: underline;
+  }
+
+  .version span.click {
+    color: #38bdf8;
+    cursor: pointer;
+    text-decoration: underline;
+  }
 
  .warning-wrap {
    text-align: center;

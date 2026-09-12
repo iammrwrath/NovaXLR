@@ -21,6 +21,7 @@ export default {
       baseWidth: 1300,
       baseHeight: 890,
       scale: 1,
+      resizeRaf: null,
     };
   },
   computed: {
@@ -36,13 +37,19 @@ export default {
   },
   methods: {
     updateScale() {
-      this.windowWidth = window.innerWidth;
-      this.windowHeight = window.innerHeight;
-      const scaleX = this.windowWidth / this.baseWidth;
-      const scaleY = this.windowHeight / this.baseHeight;
-      // Scale uniformly to fit window without clipping or distorting
-      let s = Math.min(scaleX, scaleY);
-      this.scale = Math.max(0.55, Math.min(3.0, s));
+      if (this.resizeRaf) {
+        cancelAnimationFrame(this.resizeRaf);
+      }
+      this.resizeRaf = requestAnimationFrame(() => {
+        this.windowWidth = window.innerWidth;
+        this.windowHeight = window.innerHeight;
+        const scaleX = this.windowWidth / this.baseWidth;
+        const scaleY = this.windowHeight / this.baseHeight;
+        // Scale uniformly to fit window without clipping or distorting
+        let s = Math.min(scaleX, scaleY);
+        this.scale = Math.max(0.55, Math.min(3.0, s));
+        this.resizeRaf = null;
+      });
     }
   },
   mounted() {
@@ -50,6 +57,9 @@ export default {
     window.addEventListener('resize', this.updateScale);
   },
   beforeUnmount() {
+    if (this.resizeRaf) {
+      cancelAnimationFrame(this.resizeRaf);
+    }
     window.removeEventListener('resize', this.updateScale);
   }
 }
@@ -90,8 +100,6 @@ body {
   box-sizing: border-box;
   overflow: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
   background: radial-gradient(circle at 50% 15%, #181e2b 0%, #080a0e 100%);
 }
 

@@ -48,9 +48,9 @@ export default {
     title: {type: String, required: true, default: "UNKNOWN"},
     titleSuffix: {type: String, required: true},
 
-    colour: {type: String, required: false, default: "#82CFD0"},
-    backgroundColour: {type: String, required: false, default: '#252927'},
-    rangeBackgroundColour: {type: String, required: false, default: '#252927'},
+    colour: {type: String, required: false, default: "#0ea5e9"},
+    backgroundColour: {type: String, required: false, default: '#171d2c'},
+    rangeBackgroundColour: {type: String, required: false, default: '#171d2c'},
 
     step: {type: Number, required: false, default: 1},
 
@@ -145,6 +145,10 @@ export default {
     currentValue: function () {
       this.fieldValue = this.currentValue;
     }
+  },
+
+  beforeUnmount() {
+    clearInterval(this.timer);
   }
 }
 </script>

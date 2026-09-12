@@ -82,6 +82,11 @@ export default {
     this.updateButtonTitle = this.getNewUpdateButtonTitle();
   },
 
+  beforeUnmount() {
+    window.removeEventListener("keydown", this.handleNewKeyStateEvent);
+    window.removeEventListener("keyup", this.handleNewKeyStateEvent);
+  },
+
   methods: {
     handleNewKeyStateEvent(e) {
       if (!(["Control", "Shift"].includes(e.key))) return;

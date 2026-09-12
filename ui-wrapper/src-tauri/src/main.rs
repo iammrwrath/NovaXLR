@@ -39,7 +39,7 @@ async fn main() -> Result<(), String> {
     // If running the utility has an error, make sure log level is debug, and propagate the
     // error up to the user on Windows.
     if let Err(e) = run_application().await {
-        show_error("GoXLR Utility UI".into(), e.to_string());
+        show_error("NovaXLR".into(), e.to_string());
         return Err(e.to_string());
     }
     Ok(())
@@ -159,7 +159,7 @@ async fn goxlr_preflight() -> Result<String, String> {
     let connection = LocalSocketStream::connect(path).await;
 
     if connection.is_err() {
-        let message = "The GoXLR Utility must be running before launching this app.";
+        let message = "NovaXLR Daemon must be running before launching this app.";
         return Err(message.into());
     }
     let mut socket: Socket<Value, Value> = Socket::new(connection.unwrap());
@@ -374,7 +374,7 @@ async fn manage(install: bool) -> Result<(), String> {
             let _ = socket.send(json).await;
         } else {
             return Err(format!(
-                "Unable to {}, Please stop the GoXLR Utility first.",
+                "Unable to {}, Please stop NovaXLR first.",
                 method
             ));
         }

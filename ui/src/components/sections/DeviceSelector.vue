@@ -20,7 +20,12 @@
           <Button v-for="(device, key) in getMixers()" :key=key :button-id=key :is-active=false
                   :label="getLabel2(key, device)" @button-pressed="setDevice(key)"/>
         </div>
-        <div v-else class="no-device">{{ $t('message.deviceSelector.noDevices') }}</div>
+        <div v-else class="no-device-box">
+          <div class="no-device">{{ $t('message.deviceSelector.noDevices') }}</div>
+          <div class="coexistence-hint">
+            Tip: If the official GoXLR app is running, please exit it from the Windows system tray (bottom-right taskbar) so NovaXLR can access your mixer.
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -102,13 +107,18 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 40px 0;
 }
 
 .buttonList {
-  height: 220px;
+  min-height: 220px;
   width: 700px;
   margin: 3px;
-  background-color: #353937;
+  background-color: #111520;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 
 .buttonList:not(:last-child) {
@@ -118,15 +128,13 @@ export default {
 .buttonHolder {
   height: 170px;
   width: 700px;
-
   box-sizing: border-box;
-
   overflow-y: auto;
-
+  padding: 10px;
 }
 
 .buttonHolder::-webkit-scrollbar {
-  width: 3px;
+  width: 4px;
 }
 
 .buttonHolder::-webkit-scrollbar-track {
@@ -134,23 +142,43 @@ export default {
 }
 
 .buttonHolder::-webkit-scrollbar-thumb {
-  background-color: #dfdfdf;
+  background-color: rgba(255, 255, 255, 0.15);
   border-radius: 3px;
 }
 
 .label {
-  width: 680px;
-  padding: 10px;
-  color: #fff;
-  background-color: #3b413f;
-
+  padding: 12px 18px;
+  color: #f8fafc;
+  background-color: #171d2c;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
+}
 
-  margin-bottom: 8px;
+.no-device-box {
+  padding: 20px 10px;
 }
 
 .no-device {
-  color: #fff;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.coexistence-hint {
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #38bdf8;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .no-device.disconnected {

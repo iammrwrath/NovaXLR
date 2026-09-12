@@ -785,6 +785,21 @@ export default {
 
                 macosAggregateManagement: "Disable MacOS Aggregate Management (requires restart)",
                 macosAggregateManagementAccessibility: "Disabled Utility Aggregate Management on MacOS (requires restart)",
+
+                officialMigration: {
+                    title: "Official GoXLR App Migration",
+                    description: "Import your profiles, microphone profiles, effect presets, icons, and samples from the official TC-Helicon GoXLR app into NovaXLR.",
+                    detected: "Official GoXLR library detected on your system.",
+                    notDetected: "Official GoXLR library not automatically detected.",
+                    importButton: "Import Official GoXLR Library",
+                    importing: "Importing...",
+                    confirmTitle: "Import Official GoXLR Library?",
+                    confirmMessage: "This will copy all profiles, mic profiles, effect presets, scribble icons, and samples from your official GoXLR installation into NovaXLR. Any existing files will be safely backed up.",
+                    confirmButton: "Start Import",
+                    successTitle: "Import Complete",
+                    successMessage: "Successfully imported your official GoXLR profiles, presets, mic profiles, and assets!",
+                    errorTitle: "Import Failed",
+                },
             },
 
             aboutButton: "About GoXLR",
@@ -913,6 +928,7 @@ export default {
             accessibilityDropMenuTitle: "{profileName} options",
             accessibilityOpenProfileDirectory: "Open Profile Directory",
             accessibilityOpenMicProfileDirectory: "Open Mic Profile Directory",
+            accessibilityImportOfficialProfiles: "Import from Official GoXLR App",
         },
     }
 }

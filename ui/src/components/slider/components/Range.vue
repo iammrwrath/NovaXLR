@@ -40,8 +40,8 @@ export default {
     storePath: {type: String, required: true},
     id: {type: String, required: false, default: ""},
 
-    colour: {type: String, required: false, default: "#82CFD0"},
-    backgroundColour: {type: String, required: false, default: '#252927'},
+    colour: {type: String, required: false, default: "#0ea5e9"},
+    backgroundColour: {type: String, required: false, default: '#171d2c'},
 
     title: {type: String, required: false, default: ''},
     reportedValue: {type: String, required: false, default: ''}

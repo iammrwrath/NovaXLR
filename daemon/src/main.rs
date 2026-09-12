@@ -46,6 +46,7 @@ mod events;
 mod files;
 mod firmware;
 mod mic_profile;
+mod official_goxlr;
 mod platform;
 mod primary_worker;
 mod profile;

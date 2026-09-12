@@ -18,7 +18,7 @@
 
       <div
           ref="wrapper"
-          style="position: relative; width: 500px; background-color: #252927"
+          style="position: relative; width: 500px; background-color: #111520; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); overflow: hidden;"
           role="group"
           :aria-label="$t('message.sampler.samples.waveform.title')"
       >
@@ -520,10 +520,16 @@ export default {
       interact: false,
       splitChannels: true,
       hideScrollbar: true,
-      waveColor: "#d7d7d7",
+      waveColor: "#38bdf8",
       cursorWidth: 0,
-      progressColor: "#d7d7d7",
+      progressColor: "#0ea5e9",
     });
+  },
+
+  beforeUnmount() {
+    if (this.wavesurfer) {
+      this.wavesurfer.destroy();
+    }
   },
 
   computed: {
@@ -647,7 +653,7 @@ export default {
   color: white;
   height: 173px;
   z-index: 0;
-  background-color: #252927;
+  background-color: transparent;
 }
 
 .content {

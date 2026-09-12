@@ -38,9 +38,11 @@ export default {
 }
 
 .progress .progress-bar-inner progress[value] {
-  background-color: #252927;
-  color: #59b1b6;
-  border: none;
+  background-color: #171d2c;
+  color: #0ea5e9;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
   height: 22px;
   width: 100%;
   margin: 0 0;
@@ -53,13 +55,16 @@ export default {
   text-align: center;
 }
 .progress .progress-bar-inner progress::-webkit-progress-bar {
-  background-color: #252927;
+  background-color: #171d2c;
+  border-radius: 12px;
 }
 .progress .progress-bar-inner progress[value]::-webkit-progress-value {
-  background-color: #59b1b6;
+  background: linear-gradient(90deg, #0284c7, #0ea5e9);
+  border-radius: 12px;
 }
 .progress .progress-bar-inner progress[value]::-moz-progress-bar {
-  background-color: #59b1b6;
+  background: linear-gradient(90deg, #0284c7, #0ea5e9);
+  border-radius: 12px;
 }
 
 .progress .progress-bar-inner div {
