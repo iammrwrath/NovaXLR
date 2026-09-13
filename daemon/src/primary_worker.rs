@@ -319,7 +319,7 @@ pub async fn spawn_usb_handler(
                         warn!("Error Received from {}: {}", device.serial(), error);
                     }
                 } else {
-                    warn!("Cannot find registered device with serial: {}", &serial);
+                    warn!("Cannot find registered device with serial: {}", serial);
                 }
             }
             Some(event) = device_state_rx.recv() => {
@@ -499,16 +499,14 @@ pub async fn spawn_usb_handler(
                                         );
 
                                         for device in devices.values_mut() {
-                                            if let Some(ref profile_name) = summary.active_profile {
-                                                if let Err(e) = device.perform_command(GoXLRCommand::LoadProfile(profile_name.clone(), true)).await {
+                                            if let Some(ref profile_name) = summary.active_profile
+                                                && let Err(e) = device.perform_command(GoXLRCommand::LoadProfile(profile_name.clone(), true)).await {
                                                     warn!("Could not load imported active profile {}: {}", profile_name, e);
                                                 }
-                                            }
-                                            if let Some(ref mic_profile_name) = summary.active_mic_profile {
-                                                if let Err(e) = device.perform_command(GoXLRCommand::LoadMicProfile(mic_profile_name.clone(), true)).await {
+                                            if let Some(ref mic_profile_name) = summary.active_mic_profile
+                                                && let Err(e) = device.perform_command(GoXLRCommand::LoadMicProfile(mic_profile_name.clone(), true)).await {
                                                     warn!("Could not load imported active mic profile {}: {}", mic_profile_name, e);
                                                 }
-                                            }
                                         }
 
                                         files = get_files(&mut file_manager, &settings).await;

@@ -69,10 +69,10 @@ fn parse_official_settings(settings_file: &Path) -> Result<OfficialConfig> {
                             if let Ok(v) = attr.unescape_value() {
                                 name = v.to_string();
                             }
-                        } else if attr.key.as_ref() == b"val" {
-                            if let Ok(v) = attr.unescape_value() {
-                                val = v.to_string();
-                            }
+                        } else if attr.key.as_ref() == b"val"
+                            && let Ok(v) = attr.unescape_value()
+                        {
+                            val = v.to_string();
                         }
                     }
 
@@ -145,12 +145,12 @@ fn get_standard_goxlr_base_dirs() -> Vec<PathBuf> {
     #[cfg(windows)]
     {
         // 1. Check directories::UserDirs document_dir
-        if let Some(user_dirs) = directories::UserDirs::new() {
-            if let Some(doc_dir) = user_dirs.document_dir() {
-                let doc_goxlr = doc_dir.join("GoXLR");
-                if doc_goxlr.exists() && !dirs.contains(&doc_goxlr) {
-                    dirs.push(doc_goxlr);
-                }
+        if let Some(user_dirs) = directories::UserDirs::new()
+            && let Some(doc_dir) = user_dirs.document_dir()
+        {
+            let doc_goxlr = doc_dir.join("GoXLR");
+            if doc_goxlr.exists() && !dirs.contains(&doc_goxlr) {
+                dirs.push(doc_goxlr);
             }
         }
 
@@ -218,9 +218,7 @@ fn copy_files_with_extensions(
             continue;
         };
 
-        let ext_matches = extensions
-            .iter()
-            .any(|e| ext.eq_ignore_ascii_case(e));
+        let ext_matches = extensions.iter().any(|e| ext.eq_ignore_ascii_case(e));
         if !ext_matches {
             continue;
         }
@@ -238,11 +236,11 @@ fn copy_files_with_extensions(
 
         // If destination file exists, check if contents are already identical
         if dest.exists() {
-            if let (Ok(meta_src), Ok(meta_dst)) = (path.metadata(), dest.metadata()) {
-                if meta_src.len() == meta_dst.len() {
-                    // Same size, skip re-copying
-                    continue;
-                }
+            if let (Ok(meta_src), Ok(meta_dst)) = (path.metadata(), dest.metadata())
+                && meta_src.len() == meta_dst.len()
+            {
+                // Same size, skip re-copying
+                continue;
             }
 
             // Create backup of current destination file
@@ -254,7 +252,11 @@ fn copy_files_with_extensions(
 
         match fs::copy(&path, &dest) {
             Ok(_) => {
-                info!("Imported: {:?} -> {:?}", path.file_name().unwrap_or_default(), dest);
+                info!(
+                    "Imported: {:?} -> {:?}",
+                    path.file_name().unwrap_or_default(),
+                    dest
+                );
                 count += 1;
             }
             Err(e) => {
@@ -298,22 +300,21 @@ fn copy_samples_recursive(source_dir: &Path, target_dir: &Path, base_rel: &Path)
                 continue;
             }
 
-            if let Ok(meta) = path.metadata() {
-                if meta.len() == 0 {
-                    continue;
-                }
+            if let Ok(meta) = path.metadata()
+                && meta.len() == 0
+            {
+                continue;
             }
 
             let dest = target_dir.join(file_name);
-            if dest.exists() {
-                if let (Ok(meta_src), Ok(meta_dst)) = (path.metadata(), dest.metadata()) {
-                    if meta_src.len() == meta_dst.len() {
-                        continue;
-                    }
-                }
+            if dest.exists()
+                && let (Ok(meta_src), Ok(meta_dst)) = (path.metadata(), dest.metadata())
+                && meta_src.len() == meta_dst.len()
+            {
+                continue;
             }
 
-            if let Ok(_) = fs::copy(&path, &dest) {
+            if fs::copy(&path, &dest).is_ok() {
                 count += 1;
             }
         }
@@ -388,34 +389,34 @@ pub async fn import_official_goxlr(
     }
 
     // 3. Add custom user directory if specified
-    if let Some(custom) = custom_dir {
-        if custom.exists() {
-            let p = custom.join("Profiles");
-            if p.exists() && !profile_dirs.contains(&p) {
-                profile_dirs.push(p);
-            } else if !profile_dirs.contains(&custom) {
-                profile_dirs.push(custom.clone());
-            }
+    if let Some(custom) = custom_dir
+        && custom.exists()
+    {
+        let p = custom.join("Profiles");
+        if p.exists() && !profile_dirs.contains(&p) {
+            profile_dirs.push(p);
+        } else if !profile_dirs.contains(&custom) {
+            profile_dirs.push(custom.clone());
+        }
 
-            let p = custom.join("MicProfiles");
-            if p.exists() && !mic_dirs.contains(&p) {
-                mic_dirs.push(p);
-            }
+        let p = custom.join("MicProfiles");
+        if p.exists() && !mic_dirs.contains(&p) {
+            mic_dirs.push(p);
+        }
 
-            let p = custom.join("Presets");
-            if p.exists() && !preset_dirs.contains(&p) {
-                preset_dirs.push(p);
-            }
+        let p = custom.join("Presets");
+        if p.exists() && !preset_dirs.contains(&p) {
+            preset_dirs.push(p);
+        }
 
-            let p = custom.join("Icons");
-            if p.exists() && !icon_dirs.contains(&p) {
-                icon_dirs.push(p);
-            }
+        let p = custom.join("Icons");
+        if p.exists() && !icon_dirs.contains(&p) {
+            icon_dirs.push(p);
+        }
 
-            let p = custom.join("Samples");
-            if p.exists() && !sample_dirs.contains(&p) {
-                sample_dirs.push(p);
-            }
+        let p = custom.join("Samples");
+        if p.exists() && !sample_dirs.contains(&p) {
+            sample_dirs.push(p);
         }
     }
 
@@ -425,7 +426,9 @@ pub async fn import_official_goxlr(
         && icon_dirs.is_empty()
         && sample_dirs.is_empty()
     {
-        return Err(anyhow!("No official GoXLR directories or files were detected."));
+        return Err(anyhow!(
+            "No official GoXLR directories or files were detected."
+        ));
     }
 
     let mut summary = ImportSummary {
@@ -560,7 +563,10 @@ mod tests {
     #[test]
     fn test_detection_on_current_system() {
         let detected = is_official_goxlr_detected();
-        assert!(detected, "Official GoXLR configuration should be detected on this machine");
+        assert!(
+            detected,
+            "Official GoXLR configuration should be detected on this machine"
+        );
     }
 
     #[test]
@@ -580,19 +586,24 @@ mod tests {
         // Write an existing profile in dst
         let _ = fs::write(dst.join("Custom.goxlr"), b"older data");
 
-        let copied = copy_files_with_extensions(
-            &src,
-            &dst,
-            &bkp,
-            &["goxlr"],
-            |p| p.metadata().map(|m| m.len() > 0).unwrap_or(false),
-        );
+        let copied = copy_files_with_extensions(&src, &dst, &bkp, &["goxlr"], |p| {
+            p.metadata().map(|m| m.len() > 0).unwrap_or(false)
+        });
 
         assert_eq!(copied, 1, "Should copy exactly 1 valid non-empty file");
-        assert!(bkp.join("Custom.goxlr").exists(), "Backup should have been created");
+        assert!(
+            bkp.join("Custom.goxlr").exists(),
+            "Backup should have been created"
+        );
         assert_eq!(fs::read(bkp.join("Custom.goxlr")).unwrap(), b"older data");
-        assert_eq!(fs::read(dst.join("Custom.goxlr")).unwrap(), b"fake profile data 1");
-        assert!(!dst.join("Corrupt.goxlr").exists(), "Corrupt 0-byte file should not be copied");
+        assert_eq!(
+            fs::read(dst.join("Custom.goxlr")).unwrap(),
+            b"fake profile data 1"
+        );
+        assert!(
+            !dst.join("Corrupt.goxlr").exists(),
+            "Corrupt 0-byte file should not be copied"
+        );
 
         let _ = fs::remove_dir_all(&temp_base);
     }
@@ -617,18 +628,38 @@ mod tests {
         let settings_path = temp_dir.join("settings.json");
         let settings = SettingsHandle::load(settings_path).await.unwrap();
 
-        let summary = import_official_goxlr(&settings, &paths, None).await.unwrap();
+        let summary = import_official_goxlr(&settings, &paths, None)
+            .await
+            .unwrap();
 
         println!("Import summary: {:?}", summary);
-        assert!(summary.profiles > 0, "Should have imported at least one profile");
-        assert!(summary.mic_profiles > 0, "Should have imported at least one mic profile");
-        assert!(summary.presets > 0, "Should have imported at least one preset");
+        assert!(
+            summary.profiles > 0,
+            "Should have imported at least one profile"
+        );
+        assert!(
+            summary.mic_profiles > 0,
+            "Should have imported at least one mic profile"
+        );
+        assert!(
+            summary.presets > 0,
+            "Should have imported at least one preset"
+        );
         assert!(summary.icons > 0, "Should have imported at least one icon");
 
         // Verify key official files were imported
-        assert!(paths.profiles.join("Tron.goxlr").exists(), "Tron.goxlr should exist");
-        assert!(paths.profiles.join("Undead.goxlr").exists(), "Undead.goxlr should exist");
-        assert!(paths.mic_profiles.join("Default.goxlrMicProfile").exists(), "Default mic profile should exist");
+        assert!(
+            paths.profiles.join("Tron.goxlr").exists(),
+            "Tron.goxlr should exist"
+        );
+        assert!(
+            paths.profiles.join("Undead.goxlr").exists(),
+            "Undead.goxlr should exist"
+        );
+        assert!(
+            paths.mic_profiles.join("Default.goxlrMicProfile").exists(),
+            "Default mic profile should exist"
+        );
 
         // Verify active profile was detected from GoXLR.settings
         assert_eq!(summary.active_profile, Some("Tron".to_string()));
@@ -636,4 +667,3 @@ mod tests {
         let _ = fs::remove_dir_all(&temp_dir);
     }
 }
-

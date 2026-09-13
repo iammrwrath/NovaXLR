@@ -133,30 +133,30 @@ fn locate_daemon_binary() -> Option<PathBuf> {
     let bin_name = get_daemon_binary_name();
 
     // 1. Binary directory (highest priority for installed apps)
-    if let Ok(exe_path) = std::env::current_exe() {
-        if let Some(parent) = exe_path.parent() {
-            let bin = parent.join(bin_name.clone());
-            if bin.exists() {
-                binary_path.replace(bin);
-            }
+    if let Ok(exe_path) = std::env::current_exe()
+        && let Some(parent) = exe_path.parent()
+    {
+        let bin = parent.join(bin_name.clone());
+        if bin.exists() {
+            binary_path.replace(bin);
         }
     }
 
     // 2. Current working directory
-    if binary_path.is_none() {
-        if let Ok(cwd) = std::env::current_dir() {
-            let cwd_bin = cwd.join(bin_name.clone());
-            if cwd_bin.exists() {
-                binary_path.replace(cwd_bin);
-            }
+    if binary_path.is_none()
+        && let Ok(cwd) = std::env::current_dir()
+    {
+        let cwd_bin = cwd.join(bin_name.clone());
+        if cwd_bin.exists() {
+            binary_path.replace(cwd_bin);
         }
     }
 
     // 3. Try and locate the binary on $PATH
-    if binary_path.is_none() {
-        if let Ok(path) = which(bin_name) {
-            binary_path.replace(path);
-        }
+    if binary_path.is_none()
+        && let Ok(path) = which(bin_name)
+    {
+        binary_path.replace(path);
     }
 
     binary_path
