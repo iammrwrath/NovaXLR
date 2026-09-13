@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-left: 8px; margin-right: 8px; font-family: LeagueMonoCondensed, sans-serif;;">
+  <div style="margin-left: 8px; margin-right: 8px;">
     <div class="tab" role="TabList" :aria-label="tabListLabel">
       <button v-for="tab in tabs" :key="tab.name"
         :class="{ active: tab.isActive }" v-show="!tab.hidden" @click="selectTab(tab)" role="tab"

@@ -6,7 +6,7 @@
     <AccessibleModal width="680px" ref="licenseModal" id="license_modal" :show_footer=false>
       <template v-slot:title>{{ $t('message.system.licenses') }}</template>
       <textarea
-          style="width: 630px; height: 710px; background-color: #2B2F2D; color: #fff; border: 1px solid #000; resize: none"
+          style="width: 100%; min-width: 580px; max-width: 100%; height: 480px; max-height: 60vh; background-color: #090b10; color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 14px; box-sizing: border-box; resize: none; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; line-height: 1.6;"
           disabled>Copyright (c) 2022 Nathan Adams
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

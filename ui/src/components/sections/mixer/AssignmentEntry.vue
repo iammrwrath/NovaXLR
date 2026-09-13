@@ -77,39 +77,53 @@ export default {
 .assignment {
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  align-items: center;
+  gap: 8px;
   width: 100%;
 }
 
 .button {
   display: flex;
   flex-direction: row;
+  align-items: center;
   text-align: left;
-  padding: 4px 6px;
+  padding: 6px 12px;
 
   min-width: 150px;
-  height: 30px;
+  height: 36px;
 
   box-sizing: border-box;
-  border: none;
-  background-color: #3b413f;
-  color: #fff;
-  font-family: LeagueMonoCondensed, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background-color: #171d2c;
+  color: #e2e8f0;
+  font-family: inherit;
   white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.button:hover {
+  background-color: #21283c;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .button.highlight {
-  border: 1px solid #59b1b6;
+  border: 1px solid #0ea5e9;
+  background-color: rgba(14, 165, 233, 0.15);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
+  color: #ffffff;
 }
 
 .button .icon {
-  padding-right: 6px;
-  font-size: 22px;
+  font-size: 18px;
+  color: #0ea5e9;
+  display: flex;
+  align-items: center;
 }
 
 .button .icon.faded {
-  color: #838584;
-  box-sizing: border-box;
+  color: #64748b;
 }
 
 .button .text {
@@ -119,35 +133,52 @@ export default {
   width: 100%;
   margin: auto;
   text-align: center;
+  font-weight: 500;
   box-sizing: border-box;
 }
 
 .box {
   display: flex;
-  background-color: #2A2D2C;
+  background-color: #111520;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   flex-direction: row;
-  padding: 4px;
-  border-radius: 3px;
+  padding: 3px;
+  border-radius: 8px;
+  height: 36px;
+  box-sizing: border-box;
+  align-items: center;
 }
 
 .label {
-  color: #fff;
+  color: #94a3b8;
   padding: 4px 16px;
-  display: block;
-  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  height: 28px;
+  box-sizing: border-box;
+}
+
+.label:hover:not(.selected) {
+  color: #f8fafc;
 }
 
 .selected {
-  color: #2A2D2C;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .selected.MixA {
-  background-color: #59b1b6;
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
 }
 
 .selected.MixB {
-  background-color: #CC7224;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
 }
-
-
 </style>

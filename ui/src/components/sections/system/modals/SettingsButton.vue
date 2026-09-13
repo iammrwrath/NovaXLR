@@ -518,24 +518,34 @@ export default {
 </script>
 
 <style scoped>
+.settingList {
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .settingList > :nth-child(odd) {
-  background-color: #171d2c;
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .settingList > :nth-child(even) {
-  background-color: #111520;
+  background-color: transparent;
 }
 
 .recoverDefaults {
   display: flex;
-  height: 20px;
-  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .recoverDefaults .label {
-  margin: auto;
-  width: 100%;
-  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e2e8f0;
 }
 
 .recoverDefaults .buttons {

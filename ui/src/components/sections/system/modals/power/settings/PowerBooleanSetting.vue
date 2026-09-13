@@ -50,29 +50,36 @@ export default {
 .setting {
   cursor: pointer;
   display: flex;
-  gap: 5px;
-  height: 16px;
-  padding: 5px;
-  color: #ccc;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 8px 14px;
+  color: #cbd5e1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.setting:focus-within {
-  color: #fff;
+.setting:last-child {
+  border-bottom: none;
 }
 
-.setting:hover {
-  cursor: pointer;
-  color: #fff;
+.setting:focus-within, .setting:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .label {
-  margin: auto;
-  width: 100%;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e2e8f0;
 }
 
 .input {
-  max-width: fit-content;
-  font-size: 16px;
-  margin: auto;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: #0ea5e9;
+  outline: none;
 }
 </style>

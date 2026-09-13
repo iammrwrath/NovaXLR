@@ -214,12 +214,18 @@ export default {
 </script>
 
 <style scoped>
+.settingList {
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .settingList > :nth-child(odd) {
-  background-color: #353937;
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .settingList > :nth-child(even) {
-  background-color: #242826;
+  background-color: transparent;
 }
-
 </style>

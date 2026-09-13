@@ -13,7 +13,7 @@ export default {
     label: { type: String, required: false },
     id: {type: String, required: true},
 
-    background: {type: String, required: false, default: "#3b413f" },
+    background: {type: String, required: false, default: "rgba(255, 255, 255, 0.05)" },
     disabled: {type: Boolean, required: false, default: false},
     padding: {type: String, required: false, default: "8px"},
     centered: { type: Boolean, required: false, default: false }
@@ -33,12 +33,13 @@ export default {
 
 <style scoped>
 button {
-  font-family: LeagueMonoCondensed, sans-serif;
+  font-family: inherit;
 
   display: block;
   box-sizing: border-box;
 
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
 
   width: calc(100% - 12px);
   margin: auto;
@@ -48,21 +49,24 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  /*
-   We sneak the padding 4 pixels to the left, because we can't completely hide the radio button..
-   */
   padding: v-bind(padding);
   text-align: left;
-  color: #fff;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 button:focus {
-  background-color: #49514e;
+  background-color: rgba(14, 165, 233, 0.2);
+  border-color: #0ea5e9;
+  color: #ffffff;
   outline: none;
 }
 
 button:not(.disabled):hover {
-  background-color: #49514e;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 button.centered {
@@ -70,7 +74,9 @@ button.centered {
 }
 
 button.disabled {
-  background-color: #383D3B;
-  color: #959796;
+  background-color: rgba(255, 255, 255, 0.02);
+  color: #475569;
+  border-color: transparent;
+  cursor: not-allowed;
 }
 </style>

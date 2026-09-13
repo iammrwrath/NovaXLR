@@ -77,59 +77,65 @@ export default {
 <style scoped>
 .setting {
   display: flex;
-  height: 20px;
-  padding: 10px;
-  color: #ccc;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 8px 14px;
+  color: #cbd5e1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.setting:last-child {
+  border-bottom: none;
 }
 
 .setting:focus-within {
-  color: #fff;
+  color: #ffffff;
 }
 
 .label {
-  margin: auto;
-  width: 100%;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e2e8f0;
 }
 
 .input {
-  white-space: nowrap;
-  margin: auto;
-
-  border: 1px solid #ccc;
-  padding: 2px;
-  width: 70px;
-
-  text-align: right;
+  display: flex;
+  align-items: center;
+  background-color: #171d2c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 4px 8px;
+  transition: all 0.15s ease;
+  margin-left: auto;
 }
 
-.input:hover {
-  color: #fff;
-  border-color: #fff;
+.input:hover, .input:focus-within {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.25);
+  color: #ffffff;
 }
 
 .input input {
-  margin: auto;
-  text-align: right;
-  outline: none;
-  background-color: transparent;
-  font-family: LeagueMonoCondensed, sans-serif;
-  color: #ccc;
+  background: transparent;
   border: 0;
+  outline: none;
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  text-align: right;
+  width: 50px;
   -moz-appearance: textfield;
-  width: 40px;
-}
-
-.input input:focus {
-  color: #fff;
-}
-
-.input:focus-within {
-  border: 1px solid #fff;
-  color: #fff;
 }
 
 .input input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.input span {
+  color: #94a3b8;
+  font-size: 12px;
+  margin-left: 4px;
 }
 </style>

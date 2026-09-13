@@ -52,8 +52,12 @@ export default {
 }
 
 .scroll::-webkit-scrollbar-thumb {
-  background-color: #dfdfdf;
+  background-color: rgba(255, 255, 255, 0.18);
   border-radius: 3px;
+}
+
+.scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.35);
 }
 </style>
 

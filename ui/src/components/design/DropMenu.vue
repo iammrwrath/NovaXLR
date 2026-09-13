@@ -1,12 +1,13 @@
 <template>
-  <ul @keyup.stop.prevent="debugEvent" v-show="is_active" :aria-expanded="is_active" ref="menuList" role="menu"
-      :id="menu_id"
- class="context-menu" v-click-outside="onClickOutside">
-    <li role="presentation" v-for="(option, index) in options" :key="index" @click.stop="optionClicked(option)"
-        class="item">
-      <a role="menuitem">{{ option.name }}</a>
-    </li>
-  </ul>
+  <Teleport to="body">
+    <ul @keyup.stop.prevent="debugEvent" v-show="is_active" :aria-expanded="is_active" ref="menuList" role="menu"
+        :id="menu_id" class="context-menu" v-click-outside="onClickOutside">
+      <li role="presentation" v-for="(option, index) in options" :key="index" @click.stop="optionClicked(option)"
+          class="item">
+        <a role="menuitem">{{ option.name }}</a>
+      </li>
+    </ul>
+  </Teleport>
 </template>
 
 <script>
@@ -19,7 +20,6 @@ export default {
       type: Array,
       required: true,
     },
-    // TODO: These should be required!
     menu_id: {type: String, required: false},
   },
 
@@ -28,81 +28,69 @@ export default {
       return_id: null,
       identifier: null,
       is_active: false,
-
       focus_id: 0,
     };
   },
 
   methods: {
-    showMenu(event, identifier, return_id, scrollTop) {
-      if (scrollTop === undefined) {
-        scrollTop = 0;
+    showMenu(event, identifier, return_id) {
+      let positionElement = event.currentTarget || event.target;
+
+      // Locate the containing button or clickable div
+      while (positionElement && positionElement.tagName !== "BUTTON" && positionElement.parentElement) {
+        positionElement = positionElement.parentElement;
+      }
+      if (!positionElement) {
+        positionElement = event.target;
       }
 
-      let positionElement = event.target;
-
-      // If it's an SVG or Path, we need to locate the containing div..
-      let found = false;
-      while (!found) {
-        if (positionElement.nodeName === "svg" || positionElement.nodeName === "path") {
-          positionElement = positionElement.parentNode;
-          continue;
-        }
-        found = true;
-      }
-
-      // We want to pop out from the right of whatever element was pressed, note that scrollTop has
-      // to be considered, otherwise it'll pop low on scrollers.
-      let left = positionElement.offsetLeft;
-      let top = positionElement.offsetTop - scrollTop;
-
-      // Now we need to position it to the bottom right of the element clicked..
-      left += (positionElement.clientWidth);
-      top += (positionElement.clientHeight / 2);
-
+      const rect = positionElement.getBoundingClientRect();
 
       this.identifier = identifier;
       this.return_id = return_id;
-      const menu = this.$refs.menuList;
-
-      let menuWidth = menu.offsetWidth;
-      let menuHeight = menu.offsetHeight;
-
-      let leftPosition = left + "px";
-      let topPosition = top + "px";
-
-      // Check if the Menu will break the window boundaries, and flip side if so.
-      if (menuWidth + left >= window.innerWidth) {
-        leftPosition = (left - menuWidth) + 'px';
-      }
-
-      let windowPosition = document.documentElement.scrollTop || document.body.scrollTop;
-      if (menuHeight + top >= window.innerHeight + windowPosition) {
-        topPosition = (top - menuHeight) + 'px';
-      }
-
-      // Set the Position..
-      menu.style.left = leftPosition;
-      menu.style.top = topPosition;
-
-      // Activate the Menu..
       this.is_active = true;
 
-      // Wait for the menu to render
-      let self = this;
       this.$nextTick(() => {
-        self.setFocus(0);
+        const menu = this.$refs.menuList;
+        if (!menu) return;
+
+        const menuWidth = menu.offsetWidth || 160;
+        const menuHeight = menu.offsetHeight || 110;
+
+        // Position to the right or below the clicked element
+        let left = rect.right + 4;
+        let top = rect.top;
+
+        // Check if the Menu will break the right window boundary, flip to left if so
+        if (left + menuWidth > window.innerWidth - 8) {
+          left = Math.max(8, rect.left - menuWidth - 4);
+        }
+
+        // Check if the Menu will break the bottom window boundary, shift up if so
+        if (top + menuHeight > window.innerHeight - 8) {
+          top = Math.max(8, window.innerHeight - menuHeight - 8);
+        }
+
+        menu.style.left = left + "px";
+        menu.style.top = top + "px";
+
+        this.setFocus(0);
       });
     },
 
     hideContextMenu() {
-      // There are odd cases when this can trigger twice, don't do it if we're not here anymore.
       if (this.is_active) {
-        this.$refs.menuList.children[this.focus_id].firstElementChild.tabIndex = -1;
+        if (this.$refs.menuList && this.$refs.menuList.children[this.focus_id] && this.$refs.menuList.children[this.focus_id].firstElementChild) {
+          this.$refs.menuList.children[this.focus_id].firstElementChild.tabIndex = -1;
+        }
         this.is_active = false;
 
-        // Return focus to the opening button...
-        document.getElementById(this.return_id).focus();
+        if (this.return_id) {
+          const returnElem = document.getElementById(this.return_id);
+          if (returnElem && returnElem.focus) {
+            returnElem.focus();
+          }
+        }
         this.$emit('menu-closed');
       }
     },
@@ -168,6 +156,10 @@ export default {
       }
     }
   },
+
+  beforeUnmount() {
+    this.is_active = false;
+  }
 }
 </script>
 
@@ -175,16 +167,16 @@ export default {
 .context-menu {
   background-color: #171d2c;
   color: #f8fafc;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
   list-style: none;
-  position: absolute;
+  position: fixed;
   left: 0;
   margin: 0;
   padding: 4px 0;
   top: 0;
-  z-index: 1000000;
+  z-index: 9999999;
   overflow: hidden;
 }
 

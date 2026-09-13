@@ -63,26 +63,35 @@ export default {
 .button {
   box-sizing: border-box;
   width: calc(100% - 16px);
-  margin-left: 8px;
-  margin-right: 8px;
+  margin: 2px 8px;
   padding: v-bind(padding);
   text-align: left;
-  color: #fff;
+  color: #cbd5e1;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
 
-  cursor: default;
+.button:hover:not(.selected) {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #f8fafc;
 }
 
 .selected {
-  background-color: #2d3230;
-  font-weight: bold;
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.15);
 }
 
 .button:first-child {
-  margin-top: 0;
+  margin-top: 2px;
 }
 
 .button:last-child {
-  margin-bottom: 0;
+  margin-bottom: 2px;
 }
 
 .left_side {

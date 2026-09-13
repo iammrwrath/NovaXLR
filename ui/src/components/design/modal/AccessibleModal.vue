@@ -1,27 +1,29 @@
 <template>
-  <div v-show=is_visible class="modal-mask">
-    <div class="modal-wrapper">
-      <div ref="dialog" class="modal-container" role="dialog" aria-modal="true" :aria-labelledby="`${id}_label`"
-           :aria-describedby="`${id}_body`" @keyup.esc.prevent="closeModalEsc">
-        <div class="modal-header" tabindex="0">
-          <div :id="`${id}_label`" role="heading" aria-level="2" >
-            <slot name="title" ref="title"></slot>
+  <Teleport to="body">
+    <div v-show="is_visible" class="modal-mask">
+      <div class="modal-wrapper">
+        <div ref="dialog" class="modal-container" role="dialog" aria-modal="true" :aria-labelledby="`${id}_label`"
+             :aria-describedby="`${id}_body`" @keyup.esc.prevent="closeModalEsc">
+          <div class="modal-header" tabindex="0">
+            <div :id="`${id}_label`" role="heading" aria-level="2">
+              <slot name="title" ref="title"></slot>
+            </div>
+            <button v-show="show_close" ref="close" @click="closeModal()">
+              <font-awesome-icon :title="$t('message.common.close')" icon="fa-solid fa-xmark"/>
+            </button>
           </div>
-          <button v-show=show_close ref="close" @click="closeModal()">
-            <font-awesome-icon :title="$t('message.common.close')" icon="fa-solid fa-xmark"/>
-          </button>
-        </div>
-        <div class="modal-body" :id="`${id}_body`">
-          <slot></slot>
-        </div>
-        <div v-if="show_footer" class="modal-footer">
-          <slot name="footer">
-            <button ref="ok" class="modal-default-button" @click="closeModal()">{{ $t('message.modalButtons.ok') }}</button>
-          </slot>
+          <div class="modal-body" :id="`${id}_body`">
+            <slot></slot>
+          </div>
+          <div v-if="show_footer" class="modal-footer">
+            <slot name="footer">
+              <button ref="ok" class="modal-default-button" @click="closeModal()">{{ $t('message.modalButtons.ok') }}</button>
+            </slot>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script>
@@ -80,13 +82,19 @@ export default {
 
     closeModal() {
       // Deactivate the Trap (if active)..
-      this.trap.deactivate();
+      if (this.trap) {
+        try {
+          this.trap.deactivate();
+        } catch {
+          // Ignore if already deactivated
+        }
+      }
 
       // Hide the UI..
       this.is_visible = false;
 
       // Return focus to the requested element.
-      if (this.returnFocus !== undefined) {
+      if (this.returnFocus !== undefined && this.returnFocus.focus) {
         this.returnFocus.focus();
       }
 
@@ -96,48 +104,74 @@ export default {
     isOpen() {
       return this.is_visible;
     }
+  },
+
+  beforeUnmount() {
+    if (this.trap) {
+      try {
+        this.trap.deactivate();
+      } catch {
+        // Ignore
+      }
+    }
   }
 }
-
-
 </script>
 
 <style scoped>
-/* Turn the background of the screen grey */
+/* Full viewport frosted glass overlay */
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 999999;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  display: table;
-  transition: opacity 0.3s ease;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(5, 7, 12, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  transition: opacity 0.25s ease;
 }
 
 /* Positions the Modal in the Middle of the Screen */
 .modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  pointer-events: none;
 }
 
 /* The Actual Border / Setup of the Modal */
 .modal-container {
+  pointer-events: auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
-
-  min-width: v-bind(width);
-  max-width: min-content;
-  margin: 0 auto;
+  min-width: min(v-bind(width), calc(100vw - 48px));
+  max-width: min(92vw, 840px);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
   background-color: #111520;
   border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Header Styling.. */
 .modal-header {
+  flex-shrink: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 600;
   font-size: 13px;
@@ -179,9 +213,12 @@ export default {
   background-color: #111520;
   color: #f8fafc;
   padding: v-bind(bodyPadding);
+  overflow-y: auto;
+  flex: 1 1 auto;
 }
 
 .modal-footer {
+  flex-shrink: 0;
   background-color: #111520;
   text-align: right;
   padding: 12px 18px;

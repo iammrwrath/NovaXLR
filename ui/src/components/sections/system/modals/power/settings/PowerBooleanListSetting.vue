@@ -77,47 +77,61 @@ export default {
 .setting {
   cursor: pointer;
   display: flex;
-  gap: 5px;
-  height: 18px;
-  padding: 5px;
-  color: #ccc;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 14px;
+  color: #cbd5e1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background-color 0.15s ease;
 }
 
-.setting:focus-within {
-  color: #fff;
+.setting:last-child {
+  border-bottom: none;
 }
 
-.setting:hover {
-  cursor: pointer;
-  color: #fff;
+.setting:focus-within, .setting:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .label {
-  margin: auto;
-  width: 100%;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e2e8f0;
 }
 
 .input {
-  max-width: fit-content;
-  font-size: 16px;
-  margin: auto;
+  display: flex;
+  align-items: center;
+  color: #0ea5e9;
+  font-size: 18px;
 }
 
 .input select {
-  text-align: right;
-  border: 0;
-  background-color: transparent;
-  font-family: LeagueMonoCondensed, sans-serif;
-  color: #CCCCCC;
+  text-align: left;
+  background-color: #171d2c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  color: #f8fafc;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
 }
 
-.input select:hover {
-  color: #fff;
-  cursor: pointer;
+.input select:hover, .input select:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.25);
+  color: #ffffff;
 }
 
 .input select option {
-  background-color: #2F2F2F;
-  text-align: left;
+  background-color: #111520;
+  color: #f8fafc;
+  padding: 6px;
 }
 </style>
