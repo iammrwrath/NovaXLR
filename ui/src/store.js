@@ -27,6 +27,21 @@ export const store = reactive({
         }
     },
 
+    appUpdate: {
+        checking: false,
+        checkedOnce: false,
+        available: false,
+        currentVersion: "",
+        latestVersion: "",
+        releaseName: "",
+        releaseDate: "",
+        releaseNotes: "",
+        releaseUrl: "https://github.com/iammrwrath/NovaXLR/releases",
+        downloadUrl: "",
+        error: null,
+        modalOpenTrigger: 0,
+    },
+
     onConnected(func) {
         this.on_connected.push(func);
     },
@@ -203,5 +218,71 @@ export const store = reactive({
     },
     setAccessibilityNotification(type, message) {
         this.a11y.notifications[type] = message;
+    },
+
+    triggerAppUpdateModal() {
+        this.appUpdate.modalOpenTrigger++;
+    },
+
+    async checkAppUpdate() {
+        if (this.appUpdate.checking) return;
+        this.appUpdate.checking = true;
+        this.appUpdate.error = null;
+        try {
+            const current = this.daemonVersion() || "1.2.5";
+            this.appUpdate.currentVersion = current;
+            const res = await fetch("https://api.github.com/repos/iammrwrath/NovaXLR/releases");
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
+            }
+            const releases = await res.json();
+            if (Array.isArray(releases) && releases.length > 0) {
+                const validReleases = releases.filter(r => !r.draft && !r.prerelease);
+                const latest = validReleases.length > 0 ? validReleases[0] : releases[0];
+                if (latest && latest.tag_name) {
+                    const latestVer = latest.tag_name.replace(/^v/, '');
+                    this.appUpdate.latestVersion = latestVer;
+                    this.appUpdate.releaseName = latest.name || `NovaXLR v${latestVer}`;
+                    this.appUpdate.releaseDate = latest.published_at ? new Date(latest.published_at).toLocaleDateString() : "";
+                    this.appUpdate.releaseNotes = latest.body || "";
+                    this.appUpdate.releaseUrl = latest.html_url || "https://github.com/iammrwrath/NovaXLR/releases";
+
+                    // Find Windows installer asset (.exe)
+                    let downloadUrl = "";
+                    if (Array.isArray(latest.assets)) {
+                        const exeAsset = latest.assets.find(a => a.name && a.name.endsWith('.exe'));
+                        if (exeAsset && exeAsset.browser_download_url) {
+                            downloadUrl = exeAsset.browser_download_url;
+                        }
+                    }
+                    if (!downloadUrl) {
+                        downloadUrl = `https://github.com/iammrwrath/NovaXLR/releases/download/v${latestVer}/NovaXLR-${latestVer}.exe`;
+                    }
+                    this.appUpdate.downloadUrl = downloadUrl;
+
+                    // Compare versions
+                    this.appUpdate.available = this.isVersionOutdated(current, latestVer);
+                }
+            }
+            this.appUpdate.checkedOnce = true;
+        } catch (err) {
+            console.warn("Failed checking for NovaXLR updates:", err);
+            this.appUpdate.error = err.message || "Failed to check for updates";
+        } finally {
+            this.appUpdate.checking = false;
+        }
+    },
+
+    isVersionOutdated(current, latest) {
+        if (!current || !latest) return false;
+        const cParts = String(current).split('.').map(n => parseInt(n, 10) || 0);
+        const lParts = String(latest).split('.').map(n => parseInt(n, 10) || 0);
+        for (let i = 0; i < Math.max(cParts.length, lParts.length); i++) {
+            const c = cParts[i] || 0;
+            const l = lParts[i] || 0;
+            if (l > c) return true;
+            if (l < c) return false;
+        }
+        return false;
     }
 });

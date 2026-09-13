@@ -856,6 +856,26 @@ export default {
 
             licenses: "Licenses",
             help: "Help",
+            updateButton: "Updates",
+            appUpdate: {
+                title: "NovaXLR Updates",
+                installedVersion: "Installed Version",
+                latestVersion: "Latest Version",
+                checking: "Checking for updates...",
+                upToDateTitle: "You're up to date!",
+                upToDateDesc: "You are running the latest version of NovaXLR.",
+                updateAvailableTitle: "New Version Available!",
+                updateAvailableDesc: "NovaXLR v{version} is available. Update now to get the latest features and improvements.",
+                checkNow: "Check for Updates",
+                checkingButton: "Checking...",
+                downloadNow: "Download & Install Update",
+                viewOnGithub: "View on GitHub",
+                releaseNotes: "What's New in this Release",
+                releasedOn: "Released on {date}",
+                errorTitle: "Check Failed",
+                errorDesc: "Unable to check for updates from GitHub. Please check your internet connection.",
+                retry: "Retry",
+            },
         },
 
         deviceSelector: {
@@ -867,6 +887,8 @@ export default {
 
         versionCheck: {
             updateAvailable: "Update Available",
+            upToDate: "Up to Date",
+            checkForUpdates: "Check for Updates",
             firmwareDirectionAvailable: "Firmware {direction} Available",
             firmwareDirections: {
                 update: "Update",

@@ -5,6 +5,7 @@
         <MicSetupButton />
         <SwitchDeviceButton v-if="store.getDeviceCount() > 1" />
         <FirmwareUpdateButton />
+        <AppUpdateButton />
         <ShutdownButton />
         <DeviceSettingsButton />
         <SettingsButton />
@@ -29,6 +30,7 @@ import DeviceSettingsButton from "@/components/sections/system/modals/DeviceSett
 import SwitchDeviceButton from "@/components/sections/system/modals/SwitchDeviceButton.vue";
 import {store} from "@/store";
 import FirmwareUpdateButton from "@/components/sections/system/modals/FirmwareUpdateButton.vue";
+import AppUpdateButton from "@/components/sections/system/modals/AppUpdateButton.vue";
 
 export default {
   name: "SystemComponent",
@@ -38,6 +40,7 @@ export default {
     }
   },
   components: {
+    AppUpdateButton,
     FirmwareUpdateButton,
     SwitchDeviceButton,
     DeviceSettingsButton,
@@ -57,6 +60,8 @@ export default {
 .buttons {
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
 }
 </style>

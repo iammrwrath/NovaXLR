@@ -19,9 +19,10 @@ export default {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       baseWidth: 1300,
-      baseHeight: 890,
+      baseHeight: 970,
       scale: 1,
       resizeRaf: null,
+      resizeObserver: null,
     };
   },
   computed: {
@@ -30,7 +31,7 @@ export default {
         zoom: this.scale,
         width: `${this.baseWidth}px`,
         boxSizing: 'border-box',
-        padding: '12px',
+        padding: '8px 12px',
         margin: 'auto',
       };
     }
@@ -43,11 +44,25 @@ export default {
       this.resizeRaf = requestAnimationFrame(() => {
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
-        const scaleX = this.windowWidth / this.baseWidth;
-        const scaleY = this.windowHeight / this.baseHeight;
-        // Scale uniformly to fit window without clipping or distorting
+
+        let targetHeight = this.baseHeight;
+        const scaler = document.getElementById('app-scaler');
+        if (scaler && this.scale > 0) {
+          const measuredHeight = scaler.scrollHeight / this.scale;
+          if (measuredHeight > 800) {
+            targetHeight = Math.max(970, measuredHeight);
+          }
+        }
+
+        const availWidth = Math.max(320, this.windowWidth - 16);
+        const availHeight = Math.max(320, this.windowHeight - 16);
+
+        const scaleX = availWidth / this.baseWidth;
+        const scaleY = availHeight / targetHeight;
+
+        // Scale uniformly to fit window cleanly without clipping
         let s = Math.min(scaleX, scaleY);
-        this.scale = Math.max(0.55, Math.min(3.0, s));
+        this.scale = Math.max(0.45, Math.min(3.0, s));
         this.resizeRaf = null;
       });
     }
@@ -55,10 +70,20 @@ export default {
   mounted() {
     this.updateScale();
     window.addEventListener('resize', this.updateScale);
+    const scaler = document.getElementById('app-scaler');
+    if (scaler && window.ResizeObserver) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.updateScale();
+      });
+      this.resizeObserver.observe(scaler);
+    }
   },
   beforeUnmount() {
     if (this.resizeRaf) {
       cancelAnimationFrame(this.resizeRaf);
+    }
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
     }
     window.removeEventListener('resize', this.updateScale);
   }
@@ -98,8 +123,10 @@ body {
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
-  overflow: auto;
+  overflow: hidden;
   display: flex;
+  align-items: center;
+  justify-content: center;
   background: radial-gradient(circle at 50% 15%, #181e2b 0%, #080a0e 100%);
 }
 

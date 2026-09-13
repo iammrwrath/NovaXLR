@@ -1,8 +1,19 @@
 <template>
-  <div v-if="hasVersion()" class="version">
-    NovaXLR v{{ getVersion() }}
-    <span v-if="outdated()"> - <a :href="release_path" target="_blank" @click.prevent="openRelease">{{ $t('message.versionCheck.updateAvailable') }}</a></span>
-    <span v-if="firmware_different()"> - <span class="click" @click="$emit('firmware-click')">{{ $t('message.versionCheck.firmwareDirectionAvailable', { direction: getFirmwareDirectionLabel() }) }}</span></span>
+  <div v-if="hasVersion()" class="version-container">
+    <button class="version-pill" @click="openAppUpdates" :title="$t('message.system.appUpdate.title')">
+      <span class="app-name">NovaXLR</span>
+      <span class="version-tag">v{{ getVersion() }}</span>
+      <span v-if="outdated()" class="update-indicator available">
+        <font-awesome-icon icon="fa-solid fa-cloud-arrow-down" class="update-icon" />
+        <span class="update-text">{{ $t('message.versionCheck.updateAvailable') }}</span>
+      </span>
+      <span v-else class="update-indicator uptodate" :title="$t('message.versionCheck.upToDate')">
+        <span class="uptodate-dot"></span>
+      </span>
+    </button>
+    <span v-if="firmware_different()" class="firmware-tag">
+      <span class="click" @click="$emit('firmware-click')">{{ $t('message.versionCheck.firmwareDirectionAvailable', { direction: getFirmwareDirectionLabel() }) }}</span>
+    </span>
   </div>
   <div v-if="incompatibleDriver()" class="warning-wrap">
       <a class="warning" href="https://utility.frostycoolslug.com/update-site/drivers/TC-Helicon_GoXLR_Driver_5.68.zip" target="_blank">
@@ -80,7 +91,14 @@ export default {
       return true;
     },
 
+    openAppUpdates() {
+      store.triggerAppUpdateModal();
+    },
+
     outdated() {
+      if (store.appUpdate && store.appUpdate.available) {
+        return true;
+      }
       if (store.daemonVersion() === undefined) {
         return false;
       }
@@ -194,49 +212,109 @@ export default {
 </script>
 
 <style scoped>
-  .version {
+  .version-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+
+  .version-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3px 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #94a3b8;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 11px;
+  }
+
+  .version-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(14, 165, 233, 0.4);
+    color: #f8fafc;
+    box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .version-pill .app-name {
+    font-weight: 700;
+    color: #f8fafc;
     letter-spacing: 0.5px;
-    text-align: center;
+  }
+
+  .version-pill .version-tag {
     color: #64748b;
-    margin-bottom: 8px;
-    padding: 3px;
+    font-weight: 500;
   }
 
-  .version a {
+  .update-indicator.available {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(14, 165, 233, 0.2);
+    border: 1px solid rgba(14, 165, 233, 0.4);
     color: #38bdf8;
-    text-decoration: none;
-    transition: color 0.2s;
+    border-radius: 12px;
+    padding: 1px 7px;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    animation: pulse-glow 2s infinite;
   }
 
-  .version a:hover {
-    color: #0ea5e9;
-    text-decoration: underline;
+  @keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.6); }
+    70% { box-shadow: 0 0 0 6px rgba(14, 165, 233, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
   }
 
-  .version span.click {
+  .update-indicator.uptodate .uptodate-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  }
+
+  .firmware-tag {
+    font-size: 11px;
     color: #38bdf8;
+  }
+
+  .firmware-tag .click {
     cursor: pointer;
     text-decoration: underline;
   }
 
- .warning-wrap {
-   text-align: center;
- }
+  .firmware-tag .click:hover {
+    color: #0ea5e9;
+  }
 
- .warning {
-   margin: auto;
-   background-color: #370000;
-   border: 1px solid #6e0000;
-   color: #8e8e8e;
-   font-weight: bold;
-   padding: 6px;
-   text-align: center;
- }
+  .warning-wrap {
+    text-align: center;
+  }
 
- .warning a {
-   color: #717171;
-   text-decoration: none;
- }
+  .warning {
+    margin: auto;
+    background-color: #370000;
+    border: 1px solid #6e0000;
+    color: #8e8e8e;
+    font-weight: bold;
+    padding: 6px;
+    text-align: center;
+  }
+
+  .warning a {
+    color: #717171;
+    text-decoration: none;
+  }
 </style>
