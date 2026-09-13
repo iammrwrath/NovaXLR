@@ -1,38 +1,44 @@
 <template>
   <div id="app-viewport">
-    <div id="app-scaler" :style="scalerStyle">
-      <GoXLR/>
-    </div>
+    <TitleBar />
+    <main id="app-content-wrapper">
+      <div id="app-scaler" :style="scalerStyle">
+        <GoXLR/>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
+import TitleBar from "@/components/header/TitleBar.vue";
 import GoXLR from "@/components/GoXLR.vue";
 
 export default {
   name: 'App',
   components: {
+    TitleBar,
     GoXLR,
   },
   data() {
     return {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-      baseWidth: 1300,
-      baseHeight: 970,
+      baseWidth: 1260,
+      baseHeight: 935,
       scale: 1,
       resizeRaf: null,
-      resizeObserver: null,
     };
   },
   computed: {
     scalerStyle() {
       return {
         zoom: this.scale,
-        width: `${this.baseWidth}px`,
+        width: '100%',
+        minHeight: '100%',
         boxSizing: 'border-box',
-        padding: '8px 12px',
-        margin: 'auto',
+        padding: '6px 14px 14px 14px',
+        display: 'flex',
+        flexDirection: 'column',
       };
     }
   },
@@ -45,24 +51,16 @@ export default {
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
 
-        let targetHeight = this.baseHeight;
-        const scaler = document.getElementById('app-scaler');
-        if (scaler && this.scale > 0) {
-          const measuredHeight = scaler.scrollHeight / this.scale;
-          if (measuredHeight > 800) {
-            targetHeight = Math.max(970, measuredHeight);
-          }
-        }
+        const titleBarHeight = 38;
+        const availHeight = Math.max(300, this.windowHeight - titleBarHeight);
+        const availWidth = Math.max(300, this.windowWidth);
 
-        const availWidth = Math.max(320, this.windowWidth - 16);
-        const availHeight = Math.max(320, this.windowHeight - 16);
-
+        const scaleY = availHeight / this.baseHeight;
         const scaleX = availWidth / this.baseWidth;
-        const scaleY = availHeight / targetHeight;
 
-        // Scale uniformly to fit window cleanly without clipping
+        // Scale uniformly based on the dimension that constrains it
         let s = Math.min(scaleX, scaleY);
-        this.scale = Math.max(0.45, Math.min(3.0, s));
+        this.scale = Math.max(0.55, Math.min(1.4, s));
         this.resizeRaf = null;
       });
     }
@@ -70,20 +68,10 @@ export default {
   mounted() {
     this.updateScale();
     window.addEventListener('resize', this.updateScale);
-    const scaler = document.getElementById('app-scaler');
-    if (scaler && window.ResizeObserver) {
-      this.resizeObserver = new ResizeObserver(() => {
-        this.updateScale();
-      });
-      this.resizeObserver.observe(scaler);
-    }
   },
   beforeUnmount() {
     if (this.resizeRaf) {
       cancelAnimationFrame(this.resizeRaf);
-    }
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
     }
     window.removeEventListener('resize', this.updateScale);
   }
@@ -125,9 +113,24 @@ body {
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 50% 15%, #181e2b 0%, #080a0e 100%);
+  flex-direction: column;
+  background: radial-gradient(circle at 50% 12%, #181e2b 0%, #080a0e 100%);
+}
+
+#app-content-wrapper {
+  flex: 1;
+  width: 100%;
+  height: calc(100vh - 38px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#app-scaler {
+  flex: 1;
+  width: 100%;
 }
 
 #app {

@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-left: 8px; margin-right: 8px;">
+  <div class="tabs-wrapper">
     <div class="tab" role="TabList" :aria-label="tabListLabel">
       <button v-for="tab in tabs" :key="tab.name"
         :class="{ active: tab.isActive }" v-show="!tab.hidden" @click="selectTab(tab)" role="tab"
@@ -143,6 +143,10 @@ export default {
 </script>
 
 <style>
+.tabs-wrapper {
+  width: 100%;
+}
+
 .tab {
   display: flex;
   gap: 6px;

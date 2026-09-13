@@ -25,6 +25,33 @@ static READY_EVENT_NAME: &str = "READY";
 static SHOW_EVENT_NAME: &str = "si-event";
 static HIDE_EVENT_NAME: &str = "HIDE-UI";
 static STOP_EVENT_NAME: &str = "seppuku";
+static MINIMIZE_EVENT_NAME: &str = "MINIMIZE-UI";
+static MAXIMIZE_EVENT_NAME: &str = "MAXIMIZE-UI";
+static CLOSE_EVENT_NAME: &str = "CLOSE-UI";
+
+#[tauri::command]
+fn app_window_minimize(window: tauri::WebviewWindow) {
+    let _ = window.minimize();
+}
+
+#[tauri::command]
+fn app_window_maximize(window: tauri::WebviewWindow) {
+    if window.is_maximized().unwrap_or(false) {
+        let _ = window.unmaximize();
+    } else {
+        let _ = window.maximize();
+    }
+}
+
+#[tauri::command]
+fn app_window_close(window: tauri::WebviewWindow) {
+    let _ = window.hide();
+}
+
+#[tauri::command]
+fn app_window_is_maximized(window: tauri::WebviewWindow) -> bool {
+    window.is_maximized().unwrap_or(false)
+}
 
 static SOCKET_PATH: &str = "/tmp/goxlr.socket";
 static NAMED_PIPE: &str = "@goxlr.socket";
@@ -69,6 +96,12 @@ async fn run_application() -> Result<(), String> {
         }))
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_opener::init())
+        .invoke_handler(tauri::generate_handler![
+            app_window_minimize,
+            app_window_maximize,
+            app_window_close,
+            app_window_is_maximized
+        ])
         .setup(|app| {
             let global_window = app.handle().clone();
             app.listen_any(SHOW_EVENT_NAME, move |_| {
@@ -105,6 +138,31 @@ async fn run_application() -> Result<(), String> {
                             });
                         }
                     };
+                }
+            });
+
+            let min_handle = app.handle().clone();
+            app.listen_any(MINIMIZE_EVENT_NAME, move |_| {
+                if let Some(window) = min_handle.get_webview_window(WINDOW_NAME) {
+                    let _ = window.minimize();
+                }
+            });
+
+            let max_handle = app.handle().clone();
+            app.listen_any(MAXIMIZE_EVENT_NAME, move |_| {
+                if let Some(window) = max_handle.get_webview_window(WINDOW_NAME) {
+                    if window.is_maximized().unwrap_or(false) {
+                        let _ = window.unmaximize();
+                    } else {
+                        let _ = window.maximize();
+                    }
+                }
+            });
+
+            let close_ui_handle = app.handle().clone();
+            app.listen_any(CLOSE_EVENT_NAME, move |_| {
+                if let Some(window) = close_ui_handle.get_webview_window(WINDOW_NAME) {
+                    let _ = window.hide();
                 }
             });
 

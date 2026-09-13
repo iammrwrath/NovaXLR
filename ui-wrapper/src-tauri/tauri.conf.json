@@ -20,7 +20,8 @@
           "local": true,
           "remote": {
             "urls": [
-              "http://localhost:*/*"
+              "http://localhost:*/*",
+              "http://127.0.0.1:*/*"
             ]
           },
           "permissions": [
@@ -36,6 +37,7 @@
       {
         "fullscreen": false,
         "resizable": true,
+        "decorations": false,
         "title": "NovaXLR",
         "width": 1300,
         "height": 910,

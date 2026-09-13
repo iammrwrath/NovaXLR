@@ -481,23 +481,30 @@ export default {
   width: 100%;
   font-size: 10.5pt;
   color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .top-row {
   display: flex;
   flex-direction: row;
-  column-gap: 20px;
+  gap: 16px;
   align-items: stretch;
   margin-bottom: 8px;
+  width: 100%;
 }
 
 .top-profiles {
-  flex-shrink: 0;
+  flex: 0 0 480px;
+  max-width: 480px;
 }
 
 .top-visualiser {
-  margin: auto;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -510,7 +517,7 @@ export default {
 
 .modern-divider {
   height: 1px;
-  margin: 14px 0 16px 0;
+  margin: 10px 0 12px 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 20%, rgba(14, 165, 233, 0.4) 50%, rgba(255, 255, 255, 0.08) 80%, transparent 100%);
 }
 </style>
