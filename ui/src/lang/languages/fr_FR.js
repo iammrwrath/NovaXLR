@@ -652,7 +652,7 @@ export default {
             powerButton: "Actions d'alimentation",
             power: {
                 shutdownTitle: "Actions d'arrêt",
-                shutdownDescription: "Ces actions seront exécutées lorsque l'utilitaire GoXLR sera arrêté en toute sécurité.",
+                shutdownDescription: "Ces actions seront exécutées lorsque NovaXLR sera arrêté en toute sécurité.",
 
                 sleepTitle: "Actions de mise en veille.",
                 sleepDescription: "Ces actions seront exécutées lorsque votre système va entrer en mode veille.",
@@ -694,7 +694,7 @@ export default {
                 lockFadersAccessibility: "Empêche les curseurs de descendre lorsque la mise en sourdine générale est activée.",
             },
 
-            settingsButton: "Paramètres de l'Utilitaire",
+            settingsButton: "Paramètres de NovaXLR",
             settings: {
                 language: "Langue",
                 useSystem: "Utiliser la langue du système (si disponible)",
@@ -723,13 +723,13 @@ export default {
                 allowNetworkAccessAccessibility: "Autoriser l'accès à l'interface utilisateur depuis d'autres appareils sur le réseau",
 
                 autoStart: "Démarrage automatique à la connexion",
-                autoStartAccessibility: "Démarrer l'utilitaire GoXLR lorsque l'utilisateur se connecte",
+                autoStartAccessibility: "Démarrer NovaXLR lorsque l'utilisateur se connecte",
 
                 showOnLaunch: "Afficher l'interface utilisateur au lancement",
                 showOnLaunchAccessibility: "Lance automatiquement l'interface utilisateur au démarrage",
 
                 showTray: "Afficher l'icône dans la barre d'état système (nécessite un redémarrage)",
-                showTrayAccessibility: "Afficher l'icône de l'utilitaire GoXLR dans la zone de notification du système",
+                showTrayAccessibility: "Afficher l'icône de NovaXLR dans la zone de notification du système",
 
                 ttsOnButton: "Synthèse vocale lors de l'appui sur le bouton",
                 ttsOnButtonAccessibility: "Lire à voix haute l'état du bouton lorsqu'il est pressé, soit via un lecteur d'écran soit via la synthèse vocale du système",
@@ -742,13 +742,13 @@ export default {
                     presets: "Préréglages"
                 },
 
-                shutdownUtility: "Arrêter l'utilitaire GoXLR"
+                shutdownUtility: "Arrêter NovaXLR"
             },
 
-            aboutButton: "À propos de GoXLR",
+            aboutButton: "À propos de NovaXLR",
             about: {
                 serial: "Série",
-                utilityVersion: "Version Utilitaire",
+                utilityVersion: "Version NovaXLR",
                 driverVersion: "Version du pilote",
                 hardwareVersion: "Version Matérielle",
 

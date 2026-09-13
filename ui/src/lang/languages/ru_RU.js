@@ -652,7 +652,7 @@ export default {
             powerButton: "Действия Питания",
             power: {
                 shutdownTitle: "Действия при Завершении Работы",
-                shutdownDescription: "Эти действия будут исполнены, когда GoXLR Utility безопасно отключён.",
+                shutdownDescription: "Эти действия будут исполнены, когда NovaXLR безопасно отключён.",
 
                 sleepTitle: "Действия при Сне",
                 sleepDescription: "Эти действия будут исполнены, когда ваша система перейдёт в режим Сна.",
@@ -694,7 +694,7 @@ export default {
                 lockFadersAccessibility: "Не давать фейдера передвигаться вниз, когда включён Заглушить для Всего",
             },
 
-            settingsButton: "Настройки Утилиты",
+            settingsButton: "Настройки NovaXLR",
             settings: {
                 language: "Язык",
                 useSystem: "Использовать Системный Язык (если доступен)",
@@ -723,13 +723,13 @@ export default {
                 allowNetworkAccessAccessibility: "Разрешить доступ к Интерфейсу с других устройств в сети",
 
                 autoStart: "Автозапуск при Входе",
-                autoStartAccessibility: "Запускать GoXLR Utility, когда пользователь входит в систему",
+                autoStartAccessibility: "Запускать NovaXLR, когда пользователь входит в систему",
 
                 showOnLaunch: "Показывать Интерфейс при Запуске",
                 showOnLaunchAccessibility: "Автоматически открывать Интерфейс при запуске",
 
                 showTray: "Показывать Иконку в Трее (нужен рестарт)",
-                showTrayAccessibility: "Показывать иконку GoXLR Utility в системном трее",
+                showTrayAccessibility: "Показывать иконку NovaXLR в системном трее",
 
                 ttsOnButton: "TTS при нажатии кнопок",
                 ttsOnButtonAccessibility: "Произносит статус кнопки при нажатии, либо через программу чтения с экрана, либо через системный TTS",
@@ -742,13 +742,13 @@ export default {
                     presets: "Пресеты"
                 },
 
-                shutdownUtility: "Отключить GoXLR Utility"
+                shutdownUtility: "Отключить NovaXLR"
             },
 
-            aboutButton: "О GoXLR",
+            aboutButton: "О NovaXLR",
             about: {
                 serial: "Серийный номер",
-                utilityVersion: "Версия Утилиты",
+                utilityVersion: "Версия NovaXLR",
                 driverVersion: "Версия Драйвера",
                 hardwareVersion: "Версия Аппаратной части",
 

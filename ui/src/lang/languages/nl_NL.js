@@ -652,7 +652,7 @@ export default {
             powerButton: "Stroom acties",
             power: {
                 shutdownTitle: "Afsluit acties",
-                shutdownDescription: "Deze acties worden uitgevoerd wanneer de GoXLR wordt uitgeschakeld",
+                shutdownDescription: "Deze acties worden uitgevoerd wanneer NovaXLR wordt uitgeschakeld",
 
                 sleepTitle: "Slaap acties",
                 sleepDescription: "Deze acties worden uitgevoerd wanneer de GoXLR in slaapstand wordt gezet.",
@@ -694,7 +694,7 @@ export default {
                 lockFadersAccessibility: "Zorgt ervoor dat de faders niet meer bewegen terwijl het kanaal gedempt is",
             },
 
-            settingsButton: "Utility Instellingen",
+            settingsButton: "NovaXLR Instellingen",
             settings: {
                 language: "Taal",
                 useSystem: "Gebruik systeemtaal (indien beschikbaar)",
@@ -723,13 +723,13 @@ export default {
                 allowNetworkAccessAccessibility: "Geef toestemming dat dit programma door andere apparaten in het netwerk geopend kan worden",
 
                 autoStart: "Start automatisch bij inloggen",
-                autoStartAccessibility: "Start de GoXLR Utility wanneer de gebruiker inlogt",
+                autoStartAccessibility: "Start NovaXLR wanneer de gebruiker inlogt",
 
                 showOnLaunch: "Toon UI bij opstarten",
                 showOnLaunchAccessibility: "Laat de UI automatisch zien bij opstarten",
 
                 showTray: "Toon taakbalk icoon (Vereist een herstart)",
-                showTrayAccessibility: "Toon de Utility in je taakbalk (bij het pijltje omhoog)",
+                showTrayAccessibility: "Toon het NovaXLR-icoon in je taakbalk",
 
                 ttsOnButton: "Dicteer knopfunctie bij indrukken",
                 ttsOnButtonAccessibility: "Wanneer een knop ingedrukt wordt, wordt de functie gedicteerd",
@@ -742,13 +742,13 @@ export default {
                     presets: "Presets"
                 },
 
-                shutdownUtility: "Schakel GoXLR Utility uit"
+                shutdownUtility: "Schakel NovaXLR uit"
             },
 
-            aboutButton: "Over GoXLR",
+            aboutButton: "Over NovaXLR",
             about: {
                 serial: "Serienummer",
-                utilityVersion: "Utility Versie",
+                utilityVersion: "NovaXLR Versie",
                 driverVersion: "Stuurprogramma Versie",
                 hardwareVersion: "Hardware Versie",
 

@@ -21,7 +21,7 @@ use winrt_toast_reborn::{Audio, Toast, ToastDuration, ToastManager};
 
 const GOXLR_APP_NAME: &str = "GoXLR App.exe";
 const GOXLR_BETA_APP_NAME: &str = "GoXLR Beta App.exe";
-const AUTOSTART_FILENAME: &str = "GoXLR Utility.lnk";
+const AUTOSTART_FILENAME: &str = "NovaXLR.lnk";
 
 lazy_static! {
     static ref STARTUP_PATH: Option<PathBuf> = get_startup_dir();
@@ -36,13 +36,13 @@ pub fn perform_platform_preflight() -> Result<()> {
     if get_official_app_count() > 0 {
         error!("Detected Official GoXLR Application Running, Failing Preflight.");
         bail!(
-            "The official GoXLR Application is currently running, Please close it before running the Utility"
+            "The official GoXLR Application is currently running, Please close it before running NovaXLR"
         );
     }
 
     if get_utility_count() > 1 {
         error!("Daemon Process already running, Failing Preflight");
-        bail!("The GoXLR Utility is already running, please stop it and try again.");
+        bail!("NovaXLR is already running, please stop it and try again.");
     }
 
     Ok(())
@@ -52,7 +52,7 @@ pub fn display_error(message: String) {
     let message = HSTRING::from(message);
 
     unsafe {
-        MessageBoxW(None, &message, w!("GoXLR Utility"), MB_OK | MB_ICONERROR);
+        MessageBoxW(None, &message, w!("NovaXLR"), MB_OK | MB_ICONERROR);
     }
 }
 
@@ -136,8 +136,8 @@ fn throw_notification() {
     let manager = ToastManager::new(ToastManager::POWERSHELL_AUM_ID);
 
     let mut toast = Toast::new();
-    toast.text1("GoXLR Utility Daemon Terminated");
-    toast.text2("Please stop the official app before using the Utility");
+    toast.text1("NovaXLR Daemon Terminated");
+    toast.text2("Please close the official GoXLR app before using NovaXLR");
     toast.audio(Audio::new(Sound::SMS));
     toast.duration(ToastDuration::Short);
 

@@ -677,7 +677,7 @@ export default {
             powerButton: "Power Action",
             power: {
                 shutdownTitle: "Shutdown Actions",
-                shutdownDescription: "These actions will be executed when the GoXLR Utility is safely shut down.",
+                shutdownDescription: "These actions will be executed when NovaXLR is safely shut down.",
 
                 sleepTitle: "Sleep Actions",
                 sleepDescription: "These actions will be executed when your system is going to Sleep.",
@@ -722,7 +722,7 @@ export default {
                 samplerFadeDurationAccessibility: "The duration in milliseconds that the sampler will fade out when playback is stopped",
             },
 
-            settingsButton: "Utility Settings",
+            settingsButton: "NovaXLR Settings",
             settings: {
                 language: "Language",
                 useSystem: "Use System Language (if available)",
@@ -757,13 +757,13 @@ export default {
                 allowNetworkAccessAccessibility: "Allow the UI to be accessed from other devices on the network",
 
                 autoStart: "AutoStart on Login",
-                autoStartAccessibility: "Start the GoXLR Utility when the user logs in",
+                autoStartAccessibility: "Start NovaXLR when the user logs in",
 
                 showOnLaunch: "Show UI on Launch",
                 showOnLaunchAccessibility: "Automatically launches the UI on startup",
 
                 showTray: "Show Tray Icon (requires restart)",
-                showTrayAccessibility: "Show the GoXLR Utility icon in the system tray",
+                showTrayAccessibility: "Show the NovaXLR icon in the system tray",
 
                 ttsOnButton: "TTS on button press",
                 ttsOnButtonAccessibility: "Speak the button status when pressed, either via screen reader or system TTS",
@@ -776,10 +776,10 @@ export default {
                     presets: "Presets"
                 },
 
-                shutdownUtility: "Shutdown GoXLR Utility",
+                shutdownUtility: "Shutdown NovaXLR",
 
                 shutdownConfirmTitle: "Are you Sure?",
-                shutdownConfirmMessage: "Are you sure you want to Shutdown the GoXLR Utility?",
+                shutdownConfirmMessage: "Are you sure you want to Shutdown NovaXLR?",
 
                 settingsRegionAccessibility: "settings",
 
@@ -802,10 +802,10 @@ export default {
                 },
             },
 
-            aboutButton: "About GoXLR",
+            aboutButton: "About NovaXLR",
             about: {
                 serial: "Serial",
-                utilityVersion: "Utility Version",
+                utilityVersion: "NovaXLR Version",
                 driverVersion: "Driver Version",
                 hardwareVersion: "Hardware Version",
 
@@ -826,7 +826,7 @@ export default {
                 currentIsUpToDate: "Your firmware is already up to date.\nDo you want to reinstall the current firmware version?",
                 customFirmware: "You are about to install a custom firmware.\nThis is not recommended unless you know what you are doing.\nAre you sure you want to continue?",
 
-                warning: "You are about to flash a new firmware version to your device.\nThe developers of the GoXLR Utility are not responsible for any damage that can be caused by this process. ",
+                warning: "You are about to flash a new firmware version to your device.\nThe developers of NovaXLR are not responsible for any damage that can be caused by this process. ",
                 warningInfo: "More Info",
 
                 betaWarning: "You are about to install a beta firmware version.\nThis version will not receive any official support and may contain bugs or issues that we cannot fix.",
@@ -860,8 +860,8 @@ export default {
 
         deviceSelector: {
             title: "Select Device",
-            connecting: "Attempting to Connect to the GoXLR Utility..",
-            disconnected: "Unable to connect to the GoXLR Utility, please check it's running.\n\nThis page will automatically try to reconnect..",
+            connecting: "Attempting to Connect to NovaXLR..",
+            disconnected: "Unable to connect to NovaXLR, please check it's running.\n\nThis page will automatically try to reconnect..",
             noDevices: "No GoXLR Devices Found",
         },
 

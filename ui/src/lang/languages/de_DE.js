@@ -637,7 +637,7 @@ export default {
             powerButton: "Energie-Aktionen",
             power: {
                 shutdownTitle: "Abschaltaktionen",
-                shutdownDescription: "Diese Aktionen werden ausgeführt, wenn das GoXLR Utility sicher heruntergefahren ist.",
+                shutdownDescription: "Diese Aktionen werden ausgeführt, wenn NovaXLR sicher heruntergefahren ist.",
 
                 sleepTitle: "Schlaf Aktionen",
                 sleepDescription: "Diese Aktionen werden ausgeführt, wenn das System in den Schlafmodus wechselt.",
@@ -682,7 +682,7 @@ export default {
                 samplerFadeDurationAccessibility: "Die Dauer in Millisekunden, die der Sampler ausgeblendet wird, wenn die Wiedergabe gestoppt wird",
             },
 
-            settingsButton: "Utility Einstellungen",
+            settingsButton: "NovaXLR Einstellungen",
             settings: {
                 language: "Sprache",
                 useSystem: "System Sprache verwenden (wenn verfügbar)",
@@ -717,13 +717,13 @@ export default {
                 allowNetworkAccessAccessibility: "Zugriff auf die UI von anderen Geräten im Netzwerk aus zulassen",
 
                 autoStart: "AutoStart bei Anmeldung",
-                autoStartAccessibility: "Starte das GoXLR Utility, wenn sich der Benutzer anmeldet",
+                autoStartAccessibility: "Starte NovaXLR, wenn sich der Benutzer anmeldet",
 
                 showOnLaunch: "UI beim Start anzeigen",
                 showOnLaunchAccessibility: "Startet die UI automatisch beim Start",
 
                 showTray: "Taskleistensymbol anzeigen (Neustart erforderlich)",
-                showTrayAccessibility: "Anzeigen des GoXLR Utility Icons in der Taskleiste",
+                showTrayAccessibility: "Anzeigen des NovaXLR Icons in der Taskleiste",
 
                 ttsOnButton: "TTS auf Tastendruck",
                 ttsOnButtonAccessibility: "Den Status der gedrückten Taste entweder über ein Bildschirmlesegerät oder das System-TTS vorlesen",
@@ -736,13 +736,13 @@ export default {
                     presets: "Vorlagen"
                 },
 
-                shutdownUtility: "GoXLR Utility beenden"
+                shutdownUtility: "NovaXLR beenden"
             },
 
-            aboutButton: "Über GoXLR",
+            aboutButton: "Über NovaXLR",
             about: {
                 serial: "Seriennummer",
-                utilityVersion: "Utility Version",
+                utilityVersion: "NovaXLR Version",
                 driverVersion: "Treiber Version",
                 hardwareVersion: "Hardware Version",
 
@@ -763,7 +763,7 @@ export default {
                 currentIsUpToDate: "Deine Firmware ist bereits auf dem neuesten Stand.\nMöchtest du die aktuelle Firmware neu installieren?",
                 customFirmware: "Du bist dabei, eine benutzerdefinierte Firmware zu installieren.\nDies ist nicht empfohlen, wenn du nicht weißt, was du tust.\nBist du sicher, dass du fortfahren möchtest?",
 
-                warning: "Du bist dabei, eine neue Firmware auf dein Gerät zu flashen.\nDie Entwickler der GoXLR Utility sind nicht verantwortlich für Schäden, die durch diesen Vorgang verursacht werden können.",
+                warning: "Du bist dabei, eine neue Firmware auf dein Gerät zu flashen.\nDie Entwickler von NovaXLR sind nicht verantwortlich für Schäden, die durch diesen Vorgang verursacht werden können.",
                 warningInfo: "Mehr Infos",
 
                 updatePaused: "Du bist kurz davor, die Firmware {version} zu installieren. Bist du sicher, dass du fortfahren möchtest?",

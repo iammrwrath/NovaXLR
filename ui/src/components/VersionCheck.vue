@@ -1,7 +1,7 @@
 <template>
   <div v-if="hasVersion()" class="version">
     NovaXLR v{{ getVersion() }}
-    <span v-if="outdated()"> - <a :href="release_path" target="_blank">{{ $t('message.versionCheck.updateAvailable') }}</a></span>
+    <span v-if="outdated()"> - <a :href="release_path" target="_blank" @click.prevent="openRelease">{{ $t('message.versionCheck.updateAvailable') }}</a></span>
     <span v-if="firmware_different()"> - <span class="click" @click="$emit('firmware-click')">{{ $t('message.versionCheck.firmwareDirectionAvailable', { direction: getFirmwareDirectionLabel() }) }}</span></span>
   </div>
   <div v-if="incompatibleDriver()" class="warning-wrap">
@@ -40,7 +40,8 @@ export default {
           if (!Array.isArray(data) || data.length === 0) {
             return;
           }
-          const latestRelease = data[0];
+          const validReleases = data.filter(r => !r.draft && !r.prerelease);
+          const latestRelease = validReleases.length > 0 ? validReleases[0] : data[0];
           if (latestRelease && latestRelease.tag_name) {
             this.version = latestRelease.tag_name.replace(/^v/, '');
             this.release_path = latestRelease.html_url || "#";
@@ -154,42 +155,32 @@ export default {
       return "https://api.github.com/repos/iammrwrath/NovaXLR/releases";
     },
 
+    openRelease() {
+      if (this.release_path && this.release_path !== "#") {
+        if (window.__TAURI__ && window.__TAURI__.opener) {
+          window.__TAURI__.opener.openUrl(this.release_path);
+        } else {
+          window.open(this.release_path, "_blank");
+        }
+      }
+    },
+
     isOutdated(base_version, match_version) {
-      if (match_version === undefined) {
-        // If we can't map the current version, assume they match to avoid bugging the user.
+      if (!match_version || !base_version) {
         return false;
       }
 
-      let base = base_version.split(".");
-      let match = match_version.split(".");
+      const baseParts = String(base_version).split(".").map(n => parseInt(n, 10) || 0);
+      const matchParts = String(match_version).split(".").map(n => parseInt(n, 10) || 0);
 
-      // This isn't perfect, but it doesn't need to be. If the util is reporting a different version from github, there
-      // has likely been an update, we'll deal with edge cases separately..
-      if (base[0] !== match[0]) {
-        return true;
-      }
-
-      if (base[1] !== match[1]) {
-        return true;
-      }
-
-      if (base[2] !== undefined) {
-        if (match[2] !== undefined) {
-          if (base[2] !== match[2]) {
-            return true;
-          }
-        } else {
+      for (let i = 0; i < Math.max(baseParts.length, matchParts.length); i++) {
+        const b = baseParts[i] || 0;
+        const m = matchParts[i] || 0;
+        if (m > b) {
           return true;
         }
-      }
-
-      if (base[3] !== undefined) {
-        if (match[3] !== undefined) {
-          if (base[3] !== match[3]) {
-            return true;
-          }
-        } else {
-          return true;
+        if (m < b) {
+          return false;
         }
       }
       return false;

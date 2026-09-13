@@ -632,7 +632,7 @@ export default {
             powerButton: "Azione Alimentazione",
             power: {
                 shutdownTitle: "Azioni di Spegnimento",
-                shutdownDescription: "Queste azioni verranno eseguite quando GoXLR Utility viene chiusa in maniera pulita.",
+                shutdownDescription: "Queste azioni verranno eseguite quando NovaXLR viene chiusa in maniera pulita.",
 
                 sleepTitle: "Azioni Modalità Riposo",
                 sleepDescription: "Queste azioni verranno eseguite quando il computer va in Modalità Riposo.",
@@ -674,7 +674,7 @@ export default {
                 lockFadersAccessibility: "Disabilita il movimento dei fader quando viene attivato Muta verso Tutti",
             },
 
-            settingsButton: "Impostazioni Utility",
+            settingsButton: "Impostazioni NovaXLR",
             settings: {
                 language: "Lingua",
                 useSystem: "Usa Lingua di Sistema (se disponibile)",
@@ -703,13 +703,13 @@ export default {
                 allowNetworkAccessAccessibility: "Consente di accedere all'interfaccia utente tramite altri dispositivi sulla rete locale",
 
                 autoStart: "Avvio automatico al Login",
-                autoStartAccessibility: "Avvia GoXLR Utility quando l'utente esegue l'accesso",
+                autoStartAccessibility: "Avvia NovaXLR quando l'utente esegue l'accesso",
 
                 showOnLaunch: "Mostra l'UI al Avvio",
                 showOnLaunchAccessibility: "Mostra l'UI all'avvio automaticamente",
 
                 showTray: "Mostra icona Barra di Sistema (richiede il riavvio)",
-                showTrayAccessibility: "Mostra l'icona di GoXLR Utility nella Barra di Sistema",
+                showTrayAccessibility: "Mostra l'icona di NovaXLR nella Barra di Sistema",
 
                 ttsOnButton: "Sintesi Vocale alla pressione dei tasti",
                 ttsOnButtonAccessibility: "Sintesi Vocale dello stato dei tasti quando premuti, tramite screen reader o TTS di sistema",
@@ -722,13 +722,13 @@ export default {
                     presets: "Preset"
                 },
 
-                shutdownUtility: "Chiudi GoXLR Utility"
+                shutdownUtility: "Chiudi NovaXLR"
             },
 
-            aboutButton: "Informazioni GoXLR",
+            aboutButton: "Informazioni NovaXLR",
             about: {
                 serial: "Seriale",
-                utilityVersion: "Versione Utility",
+                utilityVersion: "Versione NovaXLR",
                 driverVersion: "Versione Driver",
                 hardwareVersion: "Versione Hardware",
 
