@@ -29,8 +29,9 @@ export default {
 
 <style scoped>
 button.content {
-  min-width: 130px;
-  max-width: min-content;
+  width: 135px;
+  min-width: 135px;
+  max-width: 135px;
   height: 170px;
   background: #151a26;
   border-radius: 12px;

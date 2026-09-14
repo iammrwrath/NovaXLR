@@ -3,15 +3,15 @@
     <GroupContainer :title="$t('message.system.title')">
       <div class="buttons">
         <MicSetupButton />
-        <SwitchDeviceButton v-if="store.getDeviceCount() > 1" />
-        <FirmwareUpdateButton />
-        <AppUpdateButton />
-        <ShutdownButton />
         <DeviceSettingsButton />
         <SettingsButton />
+        <AppUpdateButton />
+        <ShutdownButton />
         <AboutButton />
         <LicenseButton />
         <HelpButton />
+        <FirmwareUpdateButton />
+        <SwitchDeviceButton v-if="store.getDeviceCount() > 1" />
       </div>
     </GroupContainer>
   </CenteredContainer>
@@ -58,10 +58,16 @@ export default {
 
 <style scoped>
 .buttons {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 135px);
   justify-content: center;
-  gap: 14px;
+  gap: 16px 20px;
+  padding: 8px 4px;
+}
+
+@media (max-width: 700px) {
+  .buttons {
+    grid-template-columns: repeat(2, 135px);
+  }
 }
 </style>

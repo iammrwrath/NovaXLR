@@ -103,10 +103,15 @@ async fn run_application() -> Result<(), String> {
             app_window_is_maximized
         ])
         .setup(|app| {
+            if let Some(window) = app.get_webview_window(WINDOW_NAME) {
+                let _ = window.set_decorations(false);
+                let _ = window.set_shadow(true);
+            }
             let global_window = app.handle().clone();
             app.listen_any(SHOW_EVENT_NAME, move |_| {
                 // Do anything and everything to make sure this Window is visible and focused!
                 let window = global_window.get_webview_window(WINDOW_NAME).unwrap();
+                let _ = window.set_decorations(false);
                 let _ = window.show();
                 let _ = window.unminimize();
                 let _ = window.set_focus();

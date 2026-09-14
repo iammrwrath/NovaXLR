@@ -93,11 +93,21 @@ export default {
 
   methods: {
     checkTauriEnvironment() {
-      this.isTauriApp = typeof window !== "undefined" && Boolean(window.__TAURI__);
+      const detect = () => {
+        return typeof window !== "undefined" && (
+          Boolean(window.__TAURI__) ||
+          Boolean(window.__TAURI_INTERNALS__) ||
+          (window.navigator && window.navigator.userAgent && window.navigator.userAgent.includes("Tauri"))
+        );
+      };
+      this.isTauriApp = detect();
       if (!this.isTauriApp && typeof window !== "undefined") {
         setTimeout(() => {
-          this.isTauriApp = Boolean(window.__TAURI__);
+          this.isTauriApp = detect();
         }, 100);
+        setTimeout(() => {
+          this.isTauriApp = detect();
+        }, 500);
       }
     },
 

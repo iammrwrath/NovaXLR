@@ -35,9 +35,11 @@
     },
     "windows": [
       {
+        "label": "main",
         "fullscreen": false,
         "resizable": true,
         "decorations": false,
+        "shadow": true,
         "title": "NovaXLR",
         "width": 1300,
         "height": 910,

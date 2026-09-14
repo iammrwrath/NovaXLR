@@ -1,5 +1,5 @@
 <template>
-    <Tabs style="width: 480px" :label="$t('message.navigation.accessibilityProfileSection')">
+    <Tabs class="file-tabs-component" :label="$t('message.navigation.accessibilityProfileSection')">
         <Tab id="profiles" :name="$t('message.navigation.profiles')" :selected="true">
             <ProfileHandler />
         </Tab>
@@ -29,4 +29,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.file-tabs-component {
+  width: 100%;
+}
+</style>

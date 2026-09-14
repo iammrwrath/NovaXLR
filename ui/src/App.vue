@@ -23,8 +23,8 @@ export default {
     return {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-      baseWidth: 1260,
-      baseHeight: 935,
+      baseWidth: 1180,
+      baseHeight: 915,
       scale: 1,
       resizeRaf: null,
     };
@@ -36,7 +36,7 @@ export default {
         width: '100%',
         minHeight: '100%',
         boxSizing: 'border-box',
-        padding: '6px 14px 14px 14px',
+        padding: '8px 16px 16px 16px',
         display: 'flex',
         flexDirection: 'column',
       };
@@ -60,7 +60,7 @@ export default {
 
         // Scale uniformly based on the dimension that constrains it
         let s = Math.min(scaleX, scaleY);
-        this.scale = Math.max(0.55, Math.min(1.4, s));
+        this.scale = Math.max(0.55, Math.min(1.6, s));
         this.resizeRaf = null;
       });
     }
