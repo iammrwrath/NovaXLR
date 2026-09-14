@@ -1,37 +1,39 @@
 <template>
-  <div style="height: 30px; text-align: right">
-    <div style="height: 14px; display: inline-block; width: calc(100% - 75px)">
-      <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.08);" />
+  <div class="profile-handler-wrapper">
+    <div style="height: 30px; text-align: right; flex-shrink: 0;">
+      <div style="height: 14px; display: inline-block; width: calc(100% - 75px)">
+        <hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.08);" />
+      </div>
+      <button
+        :title="$t('message.profileManager.accessibilityImportOfficialProfiles')"
+        class="openButton"
+        style="margin-right: 4px;"
+        @click="openImportConfirm"
+      >
+        <font-awesome-icon icon="fa-solid fa-file-import" />
+      </button>
+      <button
+        :aria-label="$t('message.profileManager.accessibilityOpenProfileDirectory')"
+        :title="$t('message.profileManager.accessibilityOpenProfileDirectory')"
+        class="openButton"
+        @click="openProfiles"
+      >
+        <font-awesome-icon icon="fa-solid fa-folder" />
+      </button>
     </div>
-    <button
-      :title="$t('message.profileManager.accessibilityImportOfficialProfiles')"
-      class="openButton"
-      style="margin-right: 4px;"
-      @click="openImportConfirm"
-    >
-      <font-awesome-icon icon="fa-solid fa-file-import" />
-    </button>
-    <button
-      :aria-label="$t('message.profileManager.accessibilityOpenProfileDirectory')"
-      :title="$t('message.profileManager.accessibilityOpenProfileDirectory')"
-      class="openButton"
-      @click="openProfiles"
-    >
-      <font-awesome-icon icon="fa-solid fa-folder" />
-    </button>
-  </div>
-  <div style="height: 340px">
-    <ProfileManager
-      ref="manager"
-      :profile-list="getProfileList()"
-      :active-profile="getActiveProfile()"
-      :menu-list="getMenuList()"
-      @new-profile="newProfile"
-      @load-profile="loadProfile"
-      @save-profile="saveProfile"
-      @save-profile-as="saveProfileAs"
-      @menu-item-pressed="menuItemPressed"
-    />
+    <div class="profile-manager-slot">
+      <ProfileManager
+        ref="manager"
+        :profile-list="getProfileList()"
+        :active-profile="getActiveProfile()"
+        :menu-list="getMenuList()"
+        @new-profile="newProfile"
+        @load-profile="loadProfile"
+        @save-profile="saveProfile"
+        @save-profile-as="saveProfileAs"
+        @menu-item-pressed="menuItemPressed"
+      />
+    </div>
   </div>
 
   <AccessibleModal ref="deleteModal" id="delProfile">
@@ -234,6 +236,21 @@ export default {
 </script>
 
 <style scoped>
+.profile-handler-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+.profile-manager-slot {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .openButton {
   display: inline-block;
   color: #a5a7a6;

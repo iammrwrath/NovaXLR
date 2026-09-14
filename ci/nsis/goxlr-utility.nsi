@@ -2,7 +2,7 @@ Unicode True
 
 
 ; Before we start, lets define some variables..
-!define /ifndef PRODUCT_VERSION "1.2.7"
+!define /ifndef PRODUCT_VERSION "1.2.8"
 !define PRODUCT_NAME "NovaXLR"
 !define PRODUCT_PUBLISHER "iammrwrath"
 !define PRODUCT_WEBSITE "https://github.com/iammrwrath/NovaXLR/"

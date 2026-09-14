@@ -32,19 +32,24 @@ export default {
 
 <style scoped>
 .expander {
-  display:inline-flex;
+  display: inline-flex;
   align-items: center;
-
-  color: #fff;
-  vertical-align: middle;
-  background-color: #3b413f;
-  padding: 15px;
-
-  border: 0;
+  justify-content: center;
+  color: #94a3b8;
+  background: rgba(22, 27, 39, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px 10px;
+  margin: auto 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: center;
 }
 
 .expander:hover {
-  background-color: #49514e;
+  color: #38bdf8;
+  background: rgba(30, 36, 52, 0.95);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
 }
 </style>
-

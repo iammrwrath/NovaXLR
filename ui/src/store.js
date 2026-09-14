@@ -229,7 +229,7 @@ export const store = reactive({
         this.appUpdate.checking = true;
         this.appUpdate.error = null;
         try {
-            const current = this.daemonVersion() || "1.2.5";
+            const current = this.daemonVersion() || "1.2.8";
             this.appUpdate.currentVersion = current;
             const res = await fetch("https://api.github.com/repos/iammrwrath/NovaXLR/releases");
             if (!res.ok) {

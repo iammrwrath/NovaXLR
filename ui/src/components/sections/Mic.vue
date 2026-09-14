@@ -1,17 +1,19 @@
 <template>
-  <div style="display: flex">
-    <div style="padding: 20px 10px 20px 20px;">
+  <div class="mic-tab-container">
+    <div class="mic-profiles-section">
       <MicProfileHandler />
     </div>
-    <ContentContainer :no-left-pad="true">
-      <ContentBox>
-        <MicSetupButton @mic-setup-open="mic_open" />
-      </ContentBox>
-      <Gate ref="gate" />
-      <Equaliser/>
-      <Compressor/>
-      <MicExtra />
-    </ContentContainer>
+    <div class="mic-content-section">
+      <ContentContainer :no-left-pad="true">
+        <ContentBox>
+          <MicSetupButton @mic-setup-open="mic_open" />
+        </ContentBox>
+        <Gate ref="gate" />
+        <Equaliser/>
+        <Compressor/>
+        <MicExtra />
+      </ContentContainer>
+    </div>
   </div>
 </template>
 
@@ -40,4 +42,23 @@ export default {
 </script>
 
 <style scoped>
+.mic-tab-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 16px;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.mic-profiles-section {
+  flex: 0 0 240px;
+  width: 240px;
+  padding: 10px 0 10px 4px;
+}
+
+.mic-content-section {
+  flex: 1;
+  min-width: 0;
+}
 </style>

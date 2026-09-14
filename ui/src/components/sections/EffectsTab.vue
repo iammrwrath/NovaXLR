@@ -1,6 +1,6 @@
 <template>
-  <div style="display: flex">
-    <div style="padding: 20px 10px 20px 20px;">
+  <div class="effects-tab-container">
+    <div class="effects-presets-section">
       <GroupContainer :title="$t('message.effects.preset.title')">
         <RadioSelection
             :title="$t('message.effects.preset.group')"
@@ -16,15 +16,17 @@
         />
       </GroupContainer>
     </div>
-    <ContentContainer :no-left-pad="true">
-      <ReverbEffect/>
-      <EchoEffect/>
-      <PitchEffect/>
-      <GenderEffect/>
-      <MegaphoneEffect/>
-      <RobotEffect/>
-      <HardTuneEffect/>
-    </ContentContainer>
+    <div class="effects-content-section">
+      <ContentContainer :no-left-pad="true">
+        <ReverbEffect/>
+        <EchoEffect/>
+        <PitchEffect/>
+        <GenderEffect/>
+        <MegaphoneEffect/>
+        <RobotEffect/>
+        <HardTuneEffect/>
+      </ContentContainer>
+    </div>
   </div>
 
   <!-- Modals -->
@@ -322,6 +324,26 @@ export default {
 </script>
 
 <style scoped>
+.effects-tab-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 16px;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.effects-presets-section {
+  flex: 0 0 240px;
+  width: 240px;
+  padding: 10px 0 10px 4px;
+}
+
+.effects-content-section {
+  flex: 1;
+  min-width: 0;
+}
+
 button {
   background-color: transparent;
   color: #fff;

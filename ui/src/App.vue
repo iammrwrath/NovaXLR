@@ -2,9 +2,7 @@
   <div id="app-viewport">
     <TitleBar />
     <main id="app-content-wrapper">
-      <div id="app-scaler" :style="scalerStyle">
-        <GoXLR/>
-      </div>
+      <GoXLR/>
     </main>
   </div>
 </template>
@@ -19,62 +17,6 @@ export default {
     TitleBar,
     GoXLR,
   },
-  data() {
-    return {
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      baseWidth: 1180,
-      baseHeight: 915,
-      scale: 1,
-      resizeRaf: null,
-    };
-  },
-  computed: {
-    scalerStyle() {
-      return {
-        zoom: this.scale,
-        width: '100%',
-        minHeight: '100%',
-        boxSizing: 'border-box',
-        padding: '8px 16px 16px 16px',
-        display: 'flex',
-        flexDirection: 'column',
-      };
-    }
-  },
-  methods: {
-    updateScale() {
-      if (this.resizeRaf) {
-        cancelAnimationFrame(this.resizeRaf);
-      }
-      this.resizeRaf = requestAnimationFrame(() => {
-        this.windowWidth = window.innerWidth;
-        this.windowHeight = window.innerHeight;
-
-        const titleBarHeight = 38;
-        const availHeight = Math.max(300, this.windowHeight - titleBarHeight);
-        const availWidth = Math.max(300, this.windowWidth);
-
-        const scaleY = availHeight / this.baseHeight;
-        const scaleX = availWidth / this.baseWidth;
-
-        // Scale uniformly based on the dimension that constrains it
-        let s = Math.min(scaleX, scaleY);
-        this.scale = Math.max(0.55, Math.min(1.6, s));
-        this.resizeRaf = null;
-      });
-    }
-  },
-  mounted() {
-    this.updateScale();
-    window.addEventListener('resize', this.updateScale);
-  },
-  beforeUnmount() {
-    if (this.resizeRaf) {
-      cancelAnimationFrame(this.resizeRaf);
-    }
-    window.removeEventListener('resize', this.updateScale);
-  }
 }
 </script>
 
@@ -121,16 +63,13 @@ body {
   flex: 1;
   width: 100%;
   height: calc(100vh - 38px);
-  overflow-y: auto;
-  overflow-x: hidden;
+  min-height: 0;
+  overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-}
-
-#app-scaler {
-  flex: 1;
-  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 16px 12px 16px;
 }
 
 #app {

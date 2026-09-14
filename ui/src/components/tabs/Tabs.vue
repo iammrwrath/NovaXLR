@@ -145,6 +145,11 @@ export default {
 <style>
 .tabs-wrapper {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
 }
 
 .tab {
@@ -158,6 +163,7 @@ export default {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   text-align: left;
   overflow-x: auto;
+  flex-shrink: 0;
 }
 
 .tab button {
@@ -165,11 +171,11 @@ export default {
   border: 1px solid transparent;
   outline: none;
   cursor: pointer;
-  padding: 8px 16px;
-  font-size: 0.95rem;
+  padding: 7px 16px;
+  font-size: 0.92rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  min-width: 110px;
+  min-width: 100px;
   max-width: min-content;
   border-radius: 8px;
   color: #94a3b8;
@@ -200,8 +206,13 @@ export default {
   border-radius: 0 0 14px 14px;
   padding: 12px;
   margin: 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: auto;
   vertical-align: middle;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 </style>

@@ -24,12 +24,20 @@ export default {
   },
 
   mounted() {
-    this.observer = new ResizeObserver(() => {
-      if (this.$refs.right !== null) {
-        this.width = this.$refs.right.clientWidth;
-      }
-    });
-    this.observer.observe(this.$refs.right);
+    if (this.$refs.right) {
+      this.observer = new ResizeObserver(() => {
+        if (this.$refs.right !== null) {
+          this.width = this.$refs.right.clientWidth;
+        }
+      });
+      this.observer.observe(this.$refs.right);
+    }
+  },
+
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   },
 
   computed: {
@@ -37,7 +45,7 @@ export default {
       if (this.width === 0) {
         return "0px";
       }
-      return this.width + 2 + "px";
+      return (this.width + 2) + "px";
     }
   }
 }
@@ -45,7 +53,8 @@ export default {
 
 <template>
   <div class="container" :role="role" :aria-label="label || title || ''">
-    <div style="width: 100%">
+    <div class="group-header" v-if="(title !== '' && title !== undefined) || $slots.right">
+      <div class="header-spacer" :style="{ width: rightWidth }" />
       <div v-if="title !== '' && title !== undefined" class="title" role="heading" :aria-level="level">
         {{ title }}
       </div>
@@ -71,7 +80,7 @@ export default {
   flex-direction: column;
   align-items: center;
 
-  padding: 12px v-bind(sidePadding) v-bind(sidePadding);
+  padding: 10px v-bind(sidePadding) 14px;
 
   background: rgba(22, 27, 39, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -80,19 +89,28 @@ export default {
   backdrop-filter: blur(8px);
 }
 
+.group-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.header-spacer {
+  flex-shrink: 0;
+}
+
 .title {
-  display: inline-block;
-  width: calc(100% - (v-bind(rightWidth) * 2));
-
-  padding: 10px 0 12px;
-  margin-left: v-bind(rightWidth);
-
+  flex: 1;
   color: #e2e8f0;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
+  padding: 4px 8px;
 }
 
 .content {
@@ -105,6 +123,9 @@ export default {
 }
 
 .right {
-  display: inline-block;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 </style>

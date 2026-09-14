@@ -81,7 +81,7 @@ export default {
       return store;
     },
     currentVersion() {
-      return store.daemonVersion() || "1.2.7";
+      return store.daemonVersion() || "1.2.8";
     },
     activeProfileName() {
       if (store.getActiveDevice() && store.getActiveDevice().profile) {

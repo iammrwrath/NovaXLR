@@ -14,7 +14,7 @@
 
       <div class="modern-divider" />
       <h1 class="sr-only">{{ $t('message.navigation.accessibilityDeviceSection') }}</h1>
-      <Tabs ref="device-tabs" @on-change="onTabChange" :label="$t('message.navigation.accessibilityDeviceSection')">
+      <Tabs class="device-tabs-component" ref="device-tabs" @on-change="onTabChange" :label="$t('message.navigation.accessibilityDeviceSection')">
         <Tab id="mic" :name="$t('message.navigation.microphone')">
           <Mic/>
         </Tab>
@@ -479,11 +479,14 @@ export default {
 
 #main {
   width: 100%;
+  height: 100%;
   font-size: 10.5pt;
   color: var(--text-main);
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .top-row {
@@ -491,19 +494,27 @@ export default {
   flex-direction: row;
   gap: 16px;
   align-items: stretch;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   width: 100%;
+  height: clamp(220px, 34vh, 320px);
+  min-height: 200px;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .top-profiles {
-  flex: 0 0 480px;
-  max-width: 480px;
+  flex: 0 0 clamp(320px, 28vw, 440px);
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
 }
 
 .top-visualiser {
   flex: 1;
   min-width: 0;
-  width: auto;
+  height: 100%;
   margin: 0;
   display: flex;
   align-items: center;
@@ -511,14 +522,25 @@ export default {
   background: rgba(18, 22, 32, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  padding: 10px 16px;
+  padding: 8px 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .modern-divider {
   height: 1px;
-  margin: 10px 0 12px 0;
+  margin: 6px 0 8px 0;
+  flex-shrink: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 20%, rgba(14, 165, 233, 0.4) 50%, rgba(255, 255, 255, 0.08) 80%, transparent 100%);
+}
+
+.device-tabs-component {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 </style>
 

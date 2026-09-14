@@ -1,5 +1,5 @@
 <template>
-  <div v-if='isActive'>
+  <div v-if='isActive' class="tab-pane">
     <slot></slot>
   </div>
 </template>
@@ -35,4 +35,12 @@ export default {
 </script>
 
 <style scoped>
+.tab-pane {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
 </style>

@@ -678,15 +678,25 @@ export default {
 
 <style>
 #goxlr-visualiser {
-  height: 408px;
-  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5));
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-#goxlr-visualiser #GoXLR { width: 100%; height: 100%; object-fit: contain; }
+#goxlr-visualiser svg,
+#goxlr-visualiser #GoXLR {
+  max-height: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  width: auto !important;
+  object-fit: contain;
+}
 #goxlr-visualiser #Logo { color: v-bind("computeAccentColour()"); }
 
 @font-face {

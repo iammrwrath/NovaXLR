@@ -15,17 +15,19 @@ export default {
 <style scoped>
 .selectorList {
   background: transparent;
-  height: calc(100% - 55px);
-  overflow-y: scroll;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .buttonHolder {
-  margin-top: 10px;
+  margin-top: 6px;
   box-sizing: border-box;
 }
 
 .selectorList::-webkit-scrollbar {
-  width: 3px;
+  width: 4px;
 }
 
 .selectorList::-webkit-scrollbar-track {
@@ -33,7 +35,7 @@ export default {
 }
 
 .selectorList::-webkit-scrollbar-thumb {
-  background-color: #dfdfdf;
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
 }
 </style>

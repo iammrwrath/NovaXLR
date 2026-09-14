@@ -24,8 +24,11 @@ export default {
   flex-direction: row;
   gap: 16px;
 
-  padding: 20px 16px;
-  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px 16px 16px;
+  justify-content: flex-start;
   align-items: flex-start;
 
   overflow-x: auto;
@@ -33,8 +36,8 @@ export default {
 }
 
 .container::-webkit-scrollbar {
-  height: 5px;
-  width: 5px;
+  height: 6px;
+  width: 6px;
 }
 
 .container::-webkit-scrollbar-track {

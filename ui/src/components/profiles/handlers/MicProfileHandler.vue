@@ -17,7 +17,7 @@
         <font-awesome-icon icon="fa-solid fa-folder" />
       </button>
     </div>
-    <div style="height: 205px">
+    <div style="height: 220px; display: flex; flex-direction: column;">
       <ProfileManager ref="manager" :profile-list="getProfileList()" :active-profile="getActiveProfile()"
                       :menu-list="getMenuList()" @new-profile="newProfile" @load-profile="loadProfile"
                       @save-profile="saveProfile" @save-profile-as="saveProfileAs"

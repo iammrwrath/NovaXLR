@@ -1,29 +1,31 @@
 <template>
-  <ProfileButtonList ref="buttonList">
-    <ProfileButton v-for="(name, index) in profileList" :key="index" :button-id="name"
-                   :label="name" :is-selected="isSelectedProfile(name)" :is-active="isActiveProfile(name)"
-                   @button-clicked="handleButtonPress"
-                   @button-double-clicked="handleDoubleClick"
-    >
-      <template #right v-if="menuList.length > 0">
-        <button :ref="getButtonId(name)"
-                :aria-label="$t('message.profileManager.accessibilityDropMenuTitle', { profileName: name })"
-                :id="getButtonId(name)" aria-haspopup="menu" aria-controls="profile_menu" class="menu"
-                @click.prevent.stop="menuPressed($event, getButtonId(name), name)">
-          <font-awesome-icon icon="fa-solid fa-ellipsis-vertical"/>
-        </button>
-      </template>
-    </ProfileButton>
-  </ProfileButtonList>
-  <div class="buttonColumns">
-    <button ref="save" :title="$t('message.profileManager.saveProfileName', {profileName: activeProfile} )"
-            class="actionButton" @click="$refs.saveModal.openModal($refs.focusOk, $refs.save)">
-      <font-awesome-icon icon="fa-solid fa-floppy-disk"/>
-    </button>
-    <button ref="new" :title="$t('message.profileManager.createProfile')" class="actionButton"
-            @click="$refs.newModal.openModal($refs.focusDefault, $refs.new)">
-      <font-awesome-icon icon="fa-solid fa-file-circle-plus"/>
-    </button>
+  <div class="profile-manager-wrapper">
+    <ProfileButtonList ref="buttonList">
+      <ProfileButton v-for="(name, index) in profileList" :key="index" :button-id="name"
+                     :label="name" :is-selected="isSelectedProfile(name)" :is-active="isActiveProfile(name)"
+                     @button-clicked="handleButtonPress"
+                     @button-double-clicked="handleDoubleClick"
+      >
+        <template #right v-if="menuList.length > 0">
+          <button :ref="getButtonId(name)"
+                  :aria-label="$t('message.profileManager.accessibilityDropMenuTitle', { profileName: name })"
+                  :id="getButtonId(name)" aria-haspopup="menu" aria-controls="profile_menu" class="menu"
+                  @click.prevent.stop="menuPressed($event, getButtonId(name), name)">
+            <font-awesome-icon icon="fa-solid fa-ellipsis-vertical"/>
+          </button>
+        </template>
+      </ProfileButton>
+    </ProfileButtonList>
+    <div class="buttonColumns">
+      <button ref="save" :title="$t('message.profileManager.saveProfileName', {profileName: activeProfile} )"
+              class="actionButton" @click="$refs.saveModal.openModal($refs.focusOk, $refs.save)">
+        <font-awesome-icon icon="fa-solid fa-floppy-disk"/>
+      </button>
+      <button ref="new" :title="$t('message.profileManager.createProfile')" class="actionButton"
+              @click="$refs.newModal.openModal($refs.focusDefault, $refs.new)">
+        <font-awesome-icon icon="fa-solid fa-file-circle-plus"/>
+      </button>
+    </div>
   </div>
 
   <DropMenu
@@ -157,12 +159,20 @@ export default {
 </script>
 
 <style scoped>
+.profile-manager-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
 
 .buttonColumns {
   display: flex;
   flex-direction: row;
   height: 35px;
-  margin: 10px 10px 0 10px;
+  flex-shrink: 0;
+  margin: 8px 10px 0 10px;
 }
 
 .actionButton {

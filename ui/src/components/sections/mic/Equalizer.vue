@@ -486,22 +486,39 @@ export default {
 </script>
 
 <style scoped>
-label {
-  color: #fff;
-  font-size: 10px;
-  font-family: sans-serif;
-}
-
 .reset {
-  border: 0;
-  margin: 0 30px 0 0;
-  padding: 5px 24px;
-  color: #fff;
-  font-family: LeagueMonoCondensed, sans-serif;
-  background-color: #3b413f;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  margin: 0 16px 0 0;
+  padding: 4px 14px;
+  color: #f1f5f9;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: rgba(30, 36, 52, 0.85);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .reset:hover {
-  background-color: #535c59;
+  background: rgba(45, 55, 78, 0.95);
+  border-color: rgba(14, 165, 233, 0.5);
+  color: #38bdf8;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.25);
+}
+
+label {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-right: 6px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+  accent-color: #0ea5e9;
+  vertical-align: middle;
 }
 </style>
