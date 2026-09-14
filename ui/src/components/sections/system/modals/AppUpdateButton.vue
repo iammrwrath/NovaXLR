@@ -151,7 +151,7 @@ export default {
     },
 
     getInstalledVersion() {
-      return store.daemonVersion() || "1.2.5";
+      return store.daemonVersion() || "1.2.7";
     },
 
     downloadUpdate() {
