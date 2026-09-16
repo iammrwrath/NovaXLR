@@ -1,4 +1,12 @@
-﻿<div align="center">
+<div align="center">
+
+<img src="assets/branding/novaxlr-logo.png" alt="NovaXLR Logo" width="128" height="128" />
+
+# NovaXLR
+
+### Next-Generation Audio Controller & Routing Suite for TC-Helicon GoXLR
+
+<br/>
 
 <img src="assets/branding/novaxlr-banner.png" alt="NovaXLR Banner" width="100%" />
 
