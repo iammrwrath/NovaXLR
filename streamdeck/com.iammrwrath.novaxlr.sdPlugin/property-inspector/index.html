@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>NovaXLR Settings</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      color: #94a3b8;
+      background: #0f131a;
+      margin: 0;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+    .sdpi-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .sdpi-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    label {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #38bdf8;
+    }
+    select, input[type="text"], input[type="number"] {
+      background: #171d2c;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      color: #f1f5f9;
+      padding: 6px 8px;
+      font-size: 11px;
+      outline: none;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    select:focus, input:focus {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 6px rgba(14, 165, 233, 0.4);
+    }
+    .checkbox-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+    .checkbox-row input {
+      margin: 0;
+      cursor: pointer;
+    }
+    .hint {
+      color: #64748b;
+      font-size: 10px;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sdpi-wrapper">
+    <!-- Profile Action -->
+    <div id="section-profile" class="sdpi-item" style="display: none;">
+      <label for="profileName">Profile Name</label>
+      <input type="text" id="profileName" placeholder="e.g. Tron, Default">
+      <div class="hint">Matches profile saved in NovaXLR</div>
+    </div>
+
+    <!-- Mic Profile Action -->
+    <div id="section-micprofile" class="sdpi-item" style="display: none;">
+      <label for="micProfileName">Mic Profile Name</label>
+      <input type="text" id="micProfileName" placeholder="e.g. GoXLR - Dynamic">
+    </div>
+
+    <!-- Channel Mute Action -->
+    <div id="section-channel" class="sdpi-item" style="display: none;">
+      <label for="channel">Audio Channel</label>
+      <select id="channel">
+        <option value="Mic">Mic</option>
+        <option value="Chat">Chat</option>
+        <option value="Music">Music</option>
+        <option value="Game">Game</option>
+        <option value="System">System</option>
+        <option value="LineIn">Line In</option>
+        <option value="Console">Console</option>
+        <option value="Sample">Sample</option>
+        <option value="Headphones">Headphones</option>
+      </select>
+    </div>
+
+    <!-- Fader Mute Action -->
+    <div id="section-fader" class="sdpi-item" style="display: none;">
+      <label for="fader">Fader</label>
+      <select id="fader">
+        <option value="A">Fader A</option>
+        <option value="B">Fader B</option>
+        <option value="C">Fader C</option>
+        <option value="D">Fader D</option>
+      </select>
+    </div>
+
+    <!-- Routing Action -->
+    <div id="section-routing" class="sdpi-item" style="display: none;">
+      <label for="routingInput">Input Source</label>
+      <select id="routingInput">
+        <option value="Microphone">Microphone</option>
+        <option value="Chat">Chat</option>
+        <option value="Music">Music</option>
+        <option value="Game">Game</option>
+        <option value="Console">Console</option>
+        <option value="LineIn">Line In</option>
+        <option value="System">System</option>
+        <option value="Samples">Samples</option>
+      </select>
+
+      <label for="routingOutput" style="margin-top: 6px;">Output Target</label>
+      <select id="routingOutput">
+        <option value="Headphones">Headphones</option>
+        <option value="Broadcast">Broadcast / Stream</option>
+        <option value="LineOut">Line Out</option>
+        <option value="ChatMic">Chat Mic</option>
+        <option value="Sampler">Sampler</option>
+      </select>
+    </div>
+
+    <!-- Cough Action -->
+    <div id="section-cough" class="sdpi-item" style="display: none;">
+      <div class="checkbox-row">
+        <input type="checkbox" id="isMomentary">
+        <label for="isMomentary" style="color: #cbd5e1; cursor: pointer;">Momentary (Hold to Mute)</label>
+      </div>
+      <div class="hint">Unchecked = Latching (Press once to mute, press again to unmute)</div>
+    </div>
+
+    <!-- FX Preset Action -->
+    <div id="section-fx" class="sdpi-item" style="display: none;">
+      <label for="preset">Voice FX Preset</label>
+      <select id="preset">
+        <option value="Preset1">Preset 1</option>
+        <option value="Preset2">Preset 2</option>
+        <option value="Preset3">Preset 3</option>
+        <option value="Preset4">Preset 4</option>
+        <option value="Preset5">Preset 5</option>
+        <option value="Preset6">Preset 6</option>
+      </select>
+    </div>
+
+    <!-- Volume Action -->
+    <div id="section-volume" class="sdpi-item" style="display: none;">
+      <label for="volChannel">Channel</label>
+      <select id="volChannel">
+        <option value="Music">Music</option>
+        <option value="Chat">Chat</option>
+        <option value="Game">Game</option>
+        <option value="System">System</option>
+        <option value="Mic">Mic</option>
+        <option value="LineIn">Line In</option>
+        <option value="Console">Console</option>
+        <option value="Headphones">Headphones</option>
+      </select>
+
+      <label for="volStep" style="margin-top: 6px;">Keypad Volume Step (%)</label>
+      <input type="number" id="volStep" min="1" max="50" value="5">
+    </div>
+  </div>
+
+  <script>
+    let websocket = null;
+    let uuid = null;
+    let actionInfo = {};
+    let settings = {};
+
+    function connectElgatoStreamDeckSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
+      uuid = inUUID;
+      actionInfo = JSON.parse(inActionInfo);
+      settings = actionInfo.payload.settings || {};
+
+      const action = actionInfo.action;
+
+      // Show relevant controls based on action UUID
+      if (action.endsWith(".profile")) {
+        document.getElementById("section-profile").style.display = "flex";
+        document.getElementById("profileName").value = settings.profileName || "";
+      } else if (action.endsWith(".micprofile")) {
+        document.getElementById("section-micprofile").style.display = "flex";
+        document.getElementById("micProfileName").value = settings.micProfileName || "";
+      } else if (action.endsWith(".channelmute")) {
+        document.getElementById("section-channel").style.display = "flex";
+        document.getElementById("channel").value = settings.channel || "Mic";
+      } else if (action.endsWith(".fadermute")) {
+        document.getElementById("section-fader").style.display = "flex";
+        document.getElementById("fader").value = settings.fader || "A";
+      } else if (action.endsWith(".routing")) {
+        document.getElementById("section-routing").style.display = "flex";
+        document.getElementById("routingInput").value = settings.input || "Microphone";
+        document.getElementById("routingOutput").value = settings.output || "Broadcast";
+      } else if (action.endsWith(".cough")) {
+        document.getElementById("section-cough").style.display = "flex";
+        document.getElementById("isMomentary").checked = !!settings.isMomentary;
+      } else if (action.endsWith(".fxpreset")) {
+        document.getElementById("section-fx").style.display = "flex";
+        document.getElementById("preset").value = settings.preset || "Preset1";
+      } else if (action.endsWith(".volume")) {
+        document.getElementById("section-volume").style.display = "flex";
+        document.getElementById("volChannel").value = settings.channel || "Music";
+        document.getElementById("volStep").value = settings.step || 5;
+      }
+
+      websocket = new WebSocket("ws://127.0.0.1:" + inPort);
+
+      websocket.onopen = function () {
+        websocket.send(JSON.stringify({
+          event: inRegisterEvent,
+          uuid: inUUID
+        }));
+      };
+
+      // Wire change listeners to auto-save settings
+      const inputs = document.querySelectorAll("input, select");
+      inputs.forEach(input => {
+        input.addEventListener("change", saveSettings);
+        input.addEventListener("keyup", saveSettings);
+      });
+    }
+
+    function saveSettings() {
+      settings.profileName = document.getElementById("profileName").value;
+      settings.micProfileName = document.getElementById("micProfileName").value;
+      settings.channel = document.getElementById("channel").value;
+      settings.fader = document.getElementById("fader").value;
+      settings.input = document.getElementById("routingInput").value;
+      settings.output = document.getElementById("routingOutput").value;
+      settings.isMomentary = document.getElementById("isMomentary").checked;
+      settings.preset = document.getElementById("preset").value;
+      if (document.getElementById("section-volume").style.display !== "none") {
+        settings.channel = document.getElementById("volChannel").value;
+      }
+      settings.step = parseInt(document.getElementById("volStep").value, 10) || 5;
+
+      if (websocket && websocket.readyState === WebSocket.OPEN) {
+        websocket.send(JSON.stringify({
+          event: "setSettings",
+          context: uuid,
+          payload: settings
+        }));
+      }
+    }
+  </script>
+</body>
+</html>

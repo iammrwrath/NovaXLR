@@ -1,0 +1,213 @@
+﻿{
+  "Name": "NovaXLR",
+  "Author": "iammrwrath",
+  "Description": "Control NovaXLR & GoXLR devices with your Stream Deck: switch profiles, toggle mutes, adjust volumes, control voice FX, routing, and cough buttons.",
+  "UUID": "com.iammrwrath.novaxlr",
+  "Icon": "icons/plugin-icon",
+  "Version": "1.2.8",
+  "Category": "NovaXLR",
+  "CategoryIcon": "icons/category-icon",
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "6.0"
+  },
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    },
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.14"
+    }
+  ],
+  "CodePath": "action.html",
+  "PropertyInspectorPath": "property-inspector/index.html",
+  "Actions": [
+    {
+      "Icon": "icons/action-profile",
+      "Name": "Profile Switch",
+      "UUID": "com.iammrwrath.novaxlr.profile",
+      "Tooltip": "Activate a NovaXLR profile",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-profile",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-profile-active",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-mic",
+      "Name": "Mic Profile Switch",
+      "UUID": "com.iammrwrath.novaxlr.micprofile",
+      "Tooltip": "Activate a NovaXLR mic profile",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-mic",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-mic-active",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-mute",
+      "Name": "Channel Mute",
+      "UUID": "com.iammrwrath.novaxlr.channelmute",
+      "Tooltip": "Toggle mute on an audio channel",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-mute",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-mute-active",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-fader",
+      "Name": "Fader Mute",
+      "UUID": "com.iammrwrath.novaxlr.fadermute",
+      "Tooltip": "Toggle mute on a specific fader (A, B, C, D)",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-fader",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-fader-muted",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-routing",
+      "Name": "Routing Toggle",
+      "UUID": "com.iammrwrath.novaxlr.routing",
+      "Tooltip": "Toggle routing between an input and output",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-routing",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-routing-on",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-cough",
+      "Name": "Cough Button",
+      "UUID": "com.iammrwrath.novaxlr.cough",
+      "Tooltip": "Toggle or hold the Cough/Mute button",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-cough",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-cough-muted",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-fx",
+      "Name": "FX Preset",
+      "UUID": "com.iammrwrath.novaxlr.fxpreset",
+      "Tooltip": "Activate a Voice FX preset (1-6)",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-fx",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-fx-active",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-bleep",
+      "Name": "Bleep Censor",
+      "UUID": "com.iammrwrath.novaxlr.bleep",
+      "Tooltip": "Trigger the bleep censor tone",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-bleep",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        },
+        {
+          "Image": "icons/action-bleep-active",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    },
+    {
+      "Icon": "icons/action-volume",
+      "Name": "Volume Control",
+      "UUID": "com.iammrwrath.novaxlr.volume",
+      "Tooltip": "Adjust channel volume or dial on Stream Deck +",
+      "PropertyInspectorPath": "property-inspector/index.html",
+      "Controllers": ["Keypad", "Encoder"],
+      "Encoder": {
+        "layout": "$B1",
+        "StackColor": "#0ea5e9",
+        "TriggerDescription": {
+          "Rotate": "Adjust volume",
+          "Push": "Mute/Unmute channel",
+          "Touch": "Reset volume"
+        }
+      },
+      "SupportedInMultiActions": true,
+      "States": [
+        {
+          "Image": "icons/action-volume",
+          "TitleAlignment": "middle",
+          "FontSize": 14
+        }
+      ]
+    }
+  ]
+}
