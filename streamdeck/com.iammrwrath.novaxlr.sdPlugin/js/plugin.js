@@ -232,7 +232,15 @@ function handleKeyDown(action, context, settings) {
         if (mixer.router && mixer.router[settings.input]) {
           isEnabled = !!mixer.router[settings.input][settings.output];
         }
-        sendDaemonCommand({ SetRouter: [settings.input, settings.output, !isEnabled] });
+        let targetState;
+        if (settings.mode === "turn_on") {
+          targetState = true;
+        } else if (settings.mode === "turn_off") {
+          targetState = false;
+        } else {
+          targetState = !isEnabled;
+        }
+        sendDaemonCommand({ SetRouter: [settings.input, settings.output, targetState] });
       }
       break;
 

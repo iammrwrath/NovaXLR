@@ -125,6 +125,13 @@
         <option value="ChatMic">Chat Mic</option>
         <option value="Sampler">Sampler</option>
       </select>
+
+      <label for="routingMode" style="margin-top: 6px;">Action Mode</label>
+      <select id="routingMode">
+        <option value="toggle">Toggle (Invert State)</option>
+        <option value="turn_on">Turn On</option>
+        <option value="turn_off">Turn Off</option>
+      </select>
     </div>
 
     <!-- Cough Action -->
@@ -230,6 +237,7 @@
         document.getElementById("section-routing").style.display = "flex";
         document.getElementById("routingInput").value = settings.input || "Microphone";
         document.getElementById("routingOutput").value = settings.output || "Broadcast";
+        document.getElementById("routingMode").value = settings.mode || "toggle";
       } else if (action.endsWith(".cough")) {
         document.getElementById("section-cough").style.display = "flex";
         document.getElementById("isMomentary").checked = !!settings.isMomentary;
@@ -266,6 +274,7 @@
       settings.fader = document.getElementById("fader").value;
       settings.input = document.getElementById("routingInput").value;
       settings.output = document.getElementById("routingOutput").value;
+      settings.mode = document.getElementById("routingMode").value;
       settings.isMomentary = document.getElementById("isMomentary").checked;
       settings.preset = document.getElementById("preset").value;
       if (document.getElementById("section-volume").style.display !== "none") {
