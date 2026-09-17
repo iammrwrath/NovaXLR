@@ -24,6 +24,9 @@
 
 </div>
 
+> [!WARNING]
+> **Active Development / Beta Notice**: NovaXLR is currently in active development. You may encounter bugs, unexpected behavior, or UI quirks. If you find any issues, please [open an issue on GitHub](https://github.com/iammrwrath/NovaXLR/issues) with reproduction steps and logs so we can resolve them promptly!
+
 ---
 
 ## 🎛️ Overview
