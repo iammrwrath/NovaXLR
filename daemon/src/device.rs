@@ -3840,6 +3840,12 @@ impl<'a> Device<'a> {
     }
 
     fn apply_effects(&mut self, params: LinkedHashSet<EffectKey>) -> Result<()> {
+        if self.is_device_mini() {
+            // GoXLR Mini does not have hardware DSP chips, so we track effect state
+            // virtually without sending hardware effect packets.
+            return Ok(());
+        }
+
         let mut vec = Vec::new();
         for effect in params {
             vec.push((
@@ -3912,6 +3918,10 @@ impl<'a> Device<'a> {
     }
 
     fn load_encoder_effects(&mut self) -> Result<()> {
+        if self.is_device_mini() {
+            return Ok(());
+        }
+
         // For now, we'll simply set the knob positions, more to come!
         let mut value = self.profile.get_pitch_encoder_position();
         self.goxlr.set_encoder_value(EncoderName::Pitch, value)?;

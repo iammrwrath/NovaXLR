@@ -749,13 +749,11 @@ impl ProfileAdapter {
 
     pub fn get_effects_ipc(
         &self,
-        is_device_mini: bool,
+        _is_device_mini: bool,
         map: EnumMap<EncoderName, i8>,
     ) -> Option<Effects> {
-        // There's no point returning effects for a Mini, it doesn't support them!
-        if is_device_mini {
-            return None;
-        }
+        // Expose effects for both Full and Mini devices so Mini users can control
+        // software voice FX presets via Stream Deck and Desktop UI.
 
         // Current Preset
         let active_preset =

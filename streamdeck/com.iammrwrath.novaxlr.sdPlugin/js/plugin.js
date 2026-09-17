@@ -1,4 +1,4 @@
-﻿// NovaXLR Stream Deck Plugin
+// NovaXLR Stream Deck Plugin
 // Developed by iammrwrath
 
 let websocket = null;
@@ -244,7 +244,11 @@ function handleKeyDown(action, context, settings) {
 
     case "com.iammrwrath.novaxlr.fxpreset":
       if (settings.preset) {
-        sendDaemonCommand({ SetActiveEffectPreset: settings.preset });
+        if (/^Preset[1-6]$/.test(settings.preset)) {
+          sendDaemonCommand({ SetActiveEffectPreset: settings.preset });
+        } else {
+          sendDaemonCommand({ LoadEffectPreset: settings.preset });
+        }
         showOk(context);
       }
       break;
@@ -384,10 +388,11 @@ function updateActionUI(context) {
 
     case "com.iammrwrath.novaxlr.fxpreset":
       const targetPreset = settings.preset || "Preset1";
-      const activePreset = (mixer.effects && mixer.effects.active_preset) || "";
-      const isPresetActive = activePreset === targetPreset;
+      const activePresetBank = (mixer.effects && mixer.effects.active_preset) || "";
+      const activePresetName = (mixer.effects && mixer.effects.preset_names && mixer.effects.preset_names[activePresetBank]) || "";
+      const isPresetActive = (activePresetBank === targetPreset) || (activePresetName.toLowerCase() === targetPreset.toLowerCase());
       setState(context, isPresetActive ? 1 : 0);
-      setTitle(context, targetPreset);
+      setTitle(context, targetPreset.replace(" (Giant)", "").replace(" (Heavy Mech)", ""));
       break;
 
     case "com.iammrwrath.novaxlr.bleep":

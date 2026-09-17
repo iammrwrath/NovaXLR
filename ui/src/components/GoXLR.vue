@@ -31,7 +31,7 @@
             </CenteredContainer>
           </ContentContainer>
         </Tab>
-        <Tab id="effects" v-if="!isDeviceMini()" :name="$t('message.navigation.effects')">
+        <Tab id="effects" :name="$t('message.navigation.effects')">
           <EffectsTab ref="effects" @on-effect-preset-change="onEffectPresetChange"/>
         </Tab>
         <Tab id="sampler" v-if="!isDeviceMini()" :name="$t('message.navigation.sampler')">
