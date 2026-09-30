@@ -4,18 +4,21 @@
     <main id="app-content-wrapper">
       <GoXLR/>
     </main>
+    <AppUpdateModal />
   </div>
 </template>
 
 <script>
 import TitleBar from "@/components/header/TitleBar.vue";
 import GoXLR from "@/components/GoXLR.vue";
+import AppUpdateModal from "@/components/modals/AppUpdateModal.vue";
 
 export default {
   name: 'App',
   components: {
     TitleBar,
     GoXLR,
+    AppUpdateModal,
   },
 }
 </script>
