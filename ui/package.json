@@ -14,13 +14,13 @@
     "click-outside-vue3": "^4.0.1",
     "fast-json-patch": "^3.1.1",
     "focus-trap": "^7.2.0",
-    "vue": "^3.2.13",
-    "vue-i18n": "^9.10.1",
+    "vue": "^3.5.45",
+    "vue-i18n": "^11.4.14",
     "wavesurfer.js": "^6.6.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
-    "vite": "^5.1.4"
+    "@vitejs/plugin-vue": "^5.2.4",
+    "vite": "^8.3.6"
   },
   "browserslist": [
     "> 1%",
