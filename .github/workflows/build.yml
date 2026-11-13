@@ -29,6 +29,10 @@ jobs:
           key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-debug-
 
+      - name: Ensure target examples directory exists
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path target/debug/examples | Out-Null
+
       - name: Running Tests
         run: cargo check --all-features
 
@@ -60,6 +64,10 @@ jobs:
           key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-debug-
 
+      - name: Ensure target examples directory exists
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path target/debug/examples | Out-Null
+
       - name: Running Tests
         run: cargo check --all-features
 
@@ -90,6 +98,10 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-debug-
+
+      - name: Ensure target examples directory exists
+        shell: pwsh
+        run: New-Item -ItemType Directory -Force -Path target/debug/examples | Out-Null
 
       - name: Running Tests
         run: cargo check --all-features
