@@ -1,3 +1,5 @@
+#![allow(deprecated)]
+
 use futures::{SinkExt, StreamExt, TryStreamExt};
 use interprocess::local_socket::tokio::prelude::LocalSocketStream;
 use interprocess::local_socket::tokio::{RecvHalf, SendHalf};
