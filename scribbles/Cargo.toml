@@ -13,5 +13,5 @@ log = { workspace = true }
 anyhow = { workspace = true }
 image = { workspace = true }
 
-imageproc = "0.25.0"
+imageproc = "0.27.0"
 ab_glyph = "0.2.32"
