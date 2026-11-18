@@ -29,6 +29,11 @@
 
 ---
 
+## ⚠️ Project Status & Known Issues
+
+> [!NOTE]
+> **Active Development / Alpha Notice**: NovaXLR is in active, early development. You may encounter bugs, quirks, or unexpected edge cases as features evolve. If you run into issues or have feedback, please feel free to open an issue on the [GitHub Issues](https://github.com/iammrwrath/NovaXLR/issues) page to help improve the project!
+
 ## 🎛️ Overview
 
 **NovaXLR** is a modernized, next-generation audio mixer and routing controller suite for **TC-Helicon GoXLR** and **GoXLR Mini** devices on Windows. Engineered for streamers, content creators, and audio power users, NovaXLR delivers studio-grade control with a sleek Obsidian dark aesthetic, true full-window dynamic responsiveness, and native Elgato Stream Deck integration.
